@@ -63,26 +63,31 @@
 
 \maketitle
 
-Dimensional modeling is a technique of logical design for structuring data so that it is intuitive to business users and delivers fast query performance. They
-are often considered the more appropriate models for OLAP applications as opposed to normalized. The normalized models we talk about, go up to the third normal
-form (3NF). Industry also refers to them as 3NF models or entity-relationship (ER) models. These models seek to reduce redundancies, and are considered better
-for transactional processing or OLTP applications.
+\section{Dimensional Modeling} % (fold)
+\label{sec:dimensional_modeling}
 
-Normalized models and dimensional models contain the same information, but are structured differently. The key difference between them is the degree of
-normalization. While normalized models are completely normalized to 3NF, dimensional models normalize some tables to 2NF and others to 3NF. Dimensional modeling
-divides the information into measurements and context. The measurements are captured by the organizations business processes and are usually numeric; they are
-called the facts. The context is represented by the dimensions which help answer the questions of who, what, when, where, why and how of a measurement.
-Dimensional models may be stored as star schemas or cubes. When stored in a relational database platform, they are called star schemas, and when stored in an
-OLAP structure they are called cubes.
+Dimensional modeling is a technique of logical design for structuring data so that it is intuitive to business users and delivers fast
+query performance. They are often considered the more appropriate models for OLAP applications as opposed to normalized. The normalized
+models we talk about, go up to the third normal form (3NF). Industry also refers to them as 3NF models or entity-relationship (ER)
+models. These models seek to reduce redundancies, and are considered better for transactional processing or OLTP applications.
 
-Dimensional models are applied in three important areas: Datawarehouses, Online-Analytical processing (OLAP), and data mining. They also have important benefits
-for business intelligence which include understandability and query performance among others. Dimensional models are often easier to understand than normalized
-models. Their design allow users to disregard irrelevant dimensions. Query performance is a second benefit that comes through dimensional modeling. The number of
-join operations is greatly reduced when using a dimensional model. Furthermore, the query plan can be improved through joins performed in a dimensional model,
-known as ``star joins''. Star joins may be performed faster through indexing or result set size prediction.
+Normalized models and dimensional models contain the same information, but are structured differently. The key difference between them
+is the degree of normalization. While normalized models are completely normalized to 3NF, dimensional models normalize some tables to
+2NF and others to 3NF. Dimensional modeling divides the information into measurements and context. The measurements are captured by the
+organizations business processes and are usually numeric; they are called the facts. The context is represented by the dimensions which
+help answer the questions of who, what, when, where, why and how of a measurement. Dimensional models may be stored as star schemas or
+cubes. When stored in a relational database platform, they are called star schemas, and when stored in an OLAP structure they are called
+cubes.
 
-\section{Fact Tables} % (fold)
-\label{sec:fact_tables}
+Dimensional models are applied in three important areas: Datawarehouses, Online-Analytical processing (OLAP), and data mining. They also
+have important benefits for business intelligence which include understandability and query performance among others. Dimensional models
+are often easier to understand than normalized models. Their design allow users to disregard irrelevant dimensions. Query performance is
+a second benefit that comes through dimensional modeling. The number of join operations is greatly reduced when using a dimensional
+model. Furthermore, the query plan can be improved through joins performed in a dimensional model, known as ``star joins''. Star joins
+may be performed faster through indexing or result set size prediction.
+
+\subsection{Fact Tables} % (fold)
+\label{sub:fact_tables}
 
 In a dimensional model fact tables are normalized to 3NF because the related context is moved to dimensions. The dimension tables are
 then denormalized to flat dimensional tables. These tables resemble 2NF tables with many low cardinality descriptors. Fact tables are
@@ -108,11 +113,10 @@ that allows simple aggregation of several finer measure values into one. Measure
 \item \emph{Non-additive measures}, which may not be combined along any dimension\textbf{, usually because the chosen formula prevents combining lower-level averages}
 \end{itemize}
 
-% section fact_tables (end)
+% subsection fact_tables (end)
 
-\section{Dimensions} % (fold)
-\label{sec:dimensions}
-
+\subsection{Dimensions} % (fold)
+\label{sub:dimensions}
 Unlike the fact tables which are comprised of just keys and numeric measurements, the dimension tables are filled with big and bulky
 descriptive attributes. These attributes are useful for constraining queries and labeling query result sets. The dimensions provide the
 context for the facts through their attributes. They are used for selecting and aggregating data at a desired level of detail. They are
@@ -143,10 +147,11 @@ Unlike fact tables, dimensions can change slowly over time. There are different 
 	\item Adding a new dimension
 \end{itemize}
 
-% section dimensions (end)
+% subsection dimensions (end)
 
-\section{Operations} % (fold)
-\label{sec:operations}
+\subsection{Operations} % (fold)
+\label{sub:operations}
+
 The dimensional model naturally lends itself to certain types of operations that include:
 
 \begin{itemize}
@@ -157,11 +162,10 @@ The dimensional model naturally lends itself to certain types of operations that
 	\item \emph{Rotating a cube}, that allows users to see the data grouped by other dimensions.
 \end{itemize}
 
-% section operations (end)
+% subsection operations (end)
 
-
-\section{Implementation} % (fold)
-\label{sec:implementation}
+\subsection{Implementation} % (fold)
+\label{sub:implementation}
 
 Dimensional models can be implemented as Multidimensional (MOLAP), Relational OLAP (ROLAP) or Hybrid (HOLAP) systems. ROLAP systems use
 relational database technology for storing data and also employ specialized index structures such as bitmap indices to achieve good
@@ -173,30 +177,41 @@ architectures combine ROLAP and MOLAP technologies. MOLAP systems tend to perfor
 tend to perform better when the data is sparse. Thus, HOLAP identifies dense and sparse regions of data and uses MOLAP and ROLAP
 respectively.
 
-% section implementation (end)
+% subsection implementation (end)
 
-\section{ETL} % (fold)
-\label{sec:etl}
-Building the datawarehouse from independent data sources involves 3 main steps:
-\begin{itemize}
-	\item Extracting the data from each source.
-	\item Transforming it to conform to the warehouse schema, and cleaning it.
-	\item Loading it into the warehouse.
-\end{itemize}
+% section dimensional_modeling (end)
 
+\section{Data Warehouses} % (fold)
+\label{sec:data_warehouses}
+
+\subsection{ETL} % (fold)
+\label{sub:etl}
+Populating the datawarehouse from independent data sources involves a process of 3 main phases: Extracting the data from each source,
+transforming it to conform to the warehouse schema and cleaning it, and loading it into the warehouse. This process is known as ETL
+(Extracting, Transforming and Loading).
 The data extraction step consists in bringing data from different sources into a database where they can be modified and incorporated
-into the warehouse. Then a set of rules and scripts are used to transform the data form an input schema to a destination schema. For
-example, one could have a source that splits a customer's name into three fields: first name, middle initial, and last name and a
-datawarehouse schema that has only one field from customer's name. To incorporate this source would have to extract the records and then
-derive all three attribute values into one value.
+into the warehouse.
+
+The transformation process uses a set of rules and scripts to transform the data from an input schema to a destination schema
+representation. For example, one could have a source that splits a customer's name into three fields: first name, middle initial, and
+last name and a datawarehouse schema that only uses one field from customer's name. To incorporate this source we would have to extract
+the records and then derive all three attribute values into one value. 
+
 Data cleaning consists in fixing errors and differences in schema conventions. These differences may result in inaccurate query
 responses and consequently inaccurate mining models. Tools that help with data cleaning address problems such as duplicate elimination
 and data cleaning frameworks.
-Finally, after the data has been extracted and transformed. It may be necessary to perform additional preprocessing before that data is
-loaded. In this step, batch load utilities are used to check the integrity constraints; perform sorting, summarizing and other
-computations to build derived tables to be stored in the datawarehouse
 
-% section etl (end)
+Finally, after the data has been extracted and transformed. It may be necessary to perform additional preprocessing before that data is
+loaded. In this final phase, batch load utilities may be used to check the integrity constraints; perform sorting, summarizing and other
+computations. Derived tables may also be build to be stored in the datawarehouse. After completing the ETL process to populate the
+warehouse. Other processes may take place to update the datawarehouse, these include:
+\begin{itemize}
+	\item \emph{Refreshing data}, which consists in propagating updates on the base tables to materialized views and indexes stored in the warehouse.
+	\item \emph{Meta-data maintainance}, which consists in updating the definitions, data ownership, and other information required to manage the datawarehouse. 
+\end{itemize}
+% subsection etl (end)
+
+% section data_warehouses (end)
 
 \textbf{SQL-based
 relational models do not handle well hierarchical dimensions.}
