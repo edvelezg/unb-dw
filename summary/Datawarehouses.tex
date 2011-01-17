@@ -84,10 +84,9 @@ known as ``star joins''. Star joins may be performed faster through indexing or 
 \section{Fact Tables} % (fold)
 \label{sec:fact_tables}
 
-In a dimensional model fact tables are normalized to 3NF, because the related context is moved to the dimensions. The dimension tables
-are then denormalized to flat dimensional tables. Dimension tables resemble 2NF tables with many low cardinality descriptors. Fact
-tables are comprised of facts which are numeric measurements that represent a specific activity. The facts in a Datawarehouse can be of
-three types:
+In a dimensional model fact tables are normalized to 3NF because the related context is moved to dimensions. The dimension tables are
+then denormalized to flat dimensional tables. These tables resemble 2NF tables with many low cardinality descriptors. Fact tables are
+comprised of facts which are numeric measurements that represent a specific activity. The facts in a Datawarehouse can be of three types:
 \begin{itemize}
 	\item \emph{Events}, which model real-world events where one fact represents the same instance of an underlying phenomenon. 
 	\item \emph{Snapshots}, which model the changes in an entity's state throughout time. An example of this could be inventory or the number of users in a website.
@@ -95,23 +94,19 @@ three types:
 \end{itemize}
 Fact tables express a many to many relationship with each dimension. The fact table contains a foreign key for each dimension, that
 allows it to integrate its information with that of the dimension. Fact tables are also characterized by a multipart key made up of
-foreign keys from the associated dimension tables in a business process. Each foreign key in the fact table has to match to a unique
+foreign keys from associated dimension tables in a business process. Each foreign key in the fact table has to match to a unique
 primary key in the corresponding dimension table. The primary key of the fact table is typically a subset of the dimension foreign keys
 and/or degenerate dimensions.
 
 Facts have a certain granularity that is determined by the degree of measurement used. As an example, one may think of different degrees
 of measurement for a period of time such as day, month or year. The lowest grain or finest granularity is the day while the highest
-grain or coarsest granularity is the year.
-The measure of a fact consists of two components: the fact's numerical property, and a formula that allows simple aggregation of several
-finer measure values into one. Measures can be of three types:
+grain or coarsest granularity is the year.The measure of a fact consists of two components: the fact's numerical property, and a formula
+that allows simple aggregation of several finer measure values into one. Measures can be of three types:
 \begin{itemize}
 \item \emph{Additive measures}, which may be meaningfully combined along any dimension.
 \item \emph{Semi-additive measures}, which may not be combined along one or more dimensions.
 \item \emph{Non-additive measures}, which may not be combined along any dimension\textbf{, usually because the chosen formula prevents combining lower-level averages}
 \end{itemize}
-
-% A fact table's grain is the dimension of the measurement event that produces the fact row. All the
-% rows in a fact table should have a single uniform grain.
 
 % section fact_tables (end)
 
@@ -119,22 +114,23 @@ finer measure values into one. Measures can be of three types:
 \label{sec:dimensions}
 
 Unlike the fact tables which are comprised of just keys and numeric measurements, the dimension tables are filled with big and bulky
-descriptive attributes. These attributes are useful for constraining queries and labeling query result sets.
-
-The dimensions provide the context for the facts through their attributes . They are used for selecting and aggregating data at a
-desired level of detail. They are often organized into containment-like hierarchies of numerous levels. Each dimension represents a
-level of detail. For example, the place dimension can be analyzed at an attribute level of country, province, or city. Each of these
-levels represents a different granularity for the fact rows.
+descriptive attributes. These attributes are useful for constraining queries and labeling query result sets. The dimensions provide the
+context for the facts through their attributes. They are used for selecting and aggregating data at a desired level of detail. They are
+often organized into containment-like hierarchies of numerous levels. Each dimension represents a level of detail. For example, the
+place dimension can be analyzed at an attribute level of country, province, or city. Each of these levels represents a different
+granularity for the fact rows. These different dimension levels can be kept in the same physical dimension table, thus maintaining a
+star schema. However, the dimensions in a star schema can be further normalized forming snowflake schemas. snowflake schemas contain one
+table for each dimension level avoiding redundancy. Kimball does not recommend this but he notes that they may be advantageous in some
+situations.
 
 Dimension rows are uniquely identified by a single key field. Kimball suggests that the dimension primary keys should be simple integers
-assigned in sequence starting with 1. These numbers act as surrogate keys for the dimension, and while they are meaningless they have
-the importance advantages for performance, mapping to integrate disparate sources, and tracking of changes in dimension attribute
-values, among others.
+assigned in consecutive sequence starting with 1. Sometimes, these numbers act as a surrogate key for the dimension, and while they are
+meaningless they have the importance advantages in performance, mapping to integrate disparate sources, and tracking changes in
+dimension attribute values, among others.
 
 Dimensions are often standardized when in a model there are different fact tables associated to different business processes. These
 standardized dimensions are known as conformed dimensions and they are shared across the enterprise's datawarehouse environment. Because
 they join with fact tables from various business processes, they must either be identical, or a subset of a more detailed dimension.
-
 Dimensions can also be degenerate. When a dimension is degenerate it has no attribute values to describe it. In such cases, a
 dimensional table is not build for that dimension, but instead it is kept in the fact table, and may be used as part of the fact table's
 primary key.
@@ -146,9 +142,6 @@ Unlike fact tables, dimensions can change slowly over time. There are different 
 	\item Adding a new dimension attribute for the old value.
 	\item Adding a new dimension
 \end{itemize}
-
-The dimensions in a star schema can be further normalized forming snowflake schemas. snowflake schemas contain one table for each
-dimension level avoiding redundancy. Kimball does not recommend this but he notes that they may be advantageous in some situations.
 
 % section dimensions (end)
 
@@ -203,9 +196,6 @@ Finally, after the data has been extracted and transformed. It may be necessary 
 loaded. In this step, batch load utilities are used to check the integrity constraints; perform sorting, summarizing and other
 computations to build derived tables to be stored in the datawarehouse
 
-
-
-	
 % section etl (end)
 
 \textbf{SQL-based
