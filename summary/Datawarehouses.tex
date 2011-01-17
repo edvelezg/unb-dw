@@ -1,0 +1,225 @@
+%
+%  untitled
+%
+%  Created by Ed on 2011-01-08.
+%  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+%
+\documentclass[]{article}
+
+% Use utf-8 encoding for foreign characters
+\usepackage[utf8]{inputenc}
+
+% Setup for fullpage use
+\usepackage{fullpage}
+
+% Uncomment some of the following if you use the features
+%
+% Running Headers and footers
+%\usepackage{fancyhdr}
+
+% Multipart figures
+%\usepackage{subfigure}
+
+% More symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{latexsym}
+
+% Surround parts of graphics with box
+\usepackage{boxedminipage}
+
+% Package for including code in the document
+\usepackage{listings}
+
+% If you want to generate a toc for each chapter (use with book)
+\usepackage{minitoc}
+
+% This is now the recommended way for checking for PDFLaTeX:
+\usepackage{ifpdf}
+
+%\newif\ifpdf
+%\ifx\pdfoutput\undefined
+%\pdffalse % we are not running PDFLaTeX
+%\else
+%\pdfoutput=1 % we are running PDFLaTeX
+%\pdftrue
+%\fi
+
+\ifpdf
+\usepackage[pdftex]{graphicx}
+\else
+\usepackage{graphicx}
+\fi
+\title{Summary}
+\author{Eduardo Gutarra Velez}
+
+\begin{document}
+
+\ifpdf
+\DeclareGraphicsExtensions{.pdf, .jpg, .tif}
+\else
+\DeclareGraphicsExtensions{.eps, .jpg}
+\fi
+
+\maketitle
+
+Dimensional modeling is a technique of logical design for structuring data so that it is intuitive to business users and delivers fast
+query performance. They are often considered the more appropriate models for OLAP applications as opposed to normalized. The normalized
+models we talk about, go up to the third normal form (3NF). Industry also refers to them as 3NF models or entity-relationship (ER)
+models. These models seek to reduce redundancies, and are considered better for transactional processing or OLTP applications.
+
+Normalized models and dimensional models contain the same information, but are structured differently. The key difference between them
+is the degree of normalization. While normalized models are completely normalized to 3NF, dimensional models normalize some tables to
+2NF and others to 3NF. Dimensional modeling divides the information into measurements and context. The measurements are captured by the
+organizations business processes and are usually numeric; they are called the \textbf{facts}. The context is represented by the
+dimensions which help answer the questions of who, what, when, where, why and how of a measurement. Dimensional models may be stored as
+star schemas or cubes. When stored in a relational database platform, they are called star schemas, and when stored in an OLAP structure
+they are called cubes. 
+
+Dimensional models are applied in three important areas: Datawarehouses, Online-Analytical processing (OLAP), and data mining. They also have important benefits
+for business intelligence which include understandability and query performance among others. Dimensional models are often easier to understand than normalized
+models. Their design allow users to disregard irrelevant dimensions. Query performance is a second benefit that comes through dimensional modeling. The number of
+join operations is greatly reduced when using a dimensional model. Furthermore, the joins performed in a dimensional model, known as ``star joins'', may be improved through indexing or precomputation.
+
+Fewer joins is one part. The other thing he says is that kind of join that you *do* still require will be "star joins". This is a very special case, where the
+main fact table is being joined to dimension tables *via foreign keys*. That means that a query optimizer can use special algorithms, or we can develop special
+indexes (probably bitmap based), or that the query optimizer can at least accurately predict how big the result of the join will be, thereby avoiding making a
+bad query plan due to bad estimates/
+
+
+% section normalized_vs_dimensional_models (end)
+
+\section{Fact Tables} % (fold)
+\label{sec:fact_tables}
+
+In a dimensional model fact tables are normalized to 3NF, because the related context is moved to the dimensions. The dimension tables
+are then denormalized to flat dimensional tables. Dimension tables resemble 2NF tables with many low cardinality descriptors. Fact
+tables are comprised of facts which are numeric measurements that represent a specific activity. The facts in a Datawarehouse can be of
+three types:
+\begin{itemize}
+	\item \emph{Events}, which model real-world events where one fact represents the same instance of an underlying phenomenon. 
+	\item \emph{Snapshots}, which model the changes in an entity's state throughout time. An example of this could be inventory or the number of users in a website.
+	\item \emph{Cumulative snapshots}, which aggregate information on activity up to a certain point in time.
+\end{itemize}
+Fact tables express a many to many relationship with each dimension. The fact table contains a foreign key for each dimension, that
+allows it to integrate its information with that of the dimension. Fact tables are also characterized by a multipart key made up of
+foreign keys from the associated dimension tables in a business process. Each foreign key in the fact table has to match to a unique
+primary key in the corresponding dimension table. The primary key of the fact table is typically a subset of the dimension foreign keys
+and/or degenerate dimensions.
+
+Facts have a certain granularity that is determined by the degree of measurement used. As an example, one may think of different degrees
+of measurement for a period of time such as day, month or year. The lowest grain or finest granularity is the day while the highest
+grain or coarsest granularity is the year.
+The measure of a fact consists of two components: the fact's numerical property, and a formula that allows simple aggregation of several
+finer measure values into one. Measures can be of three types:
+\begin{itemize}
+\item \emph{Additive measures}, which may be meaningfully combined along any dimension.
+\item \emph{Semi-additive measures}, which may not be combined along one or more dimensions.
+\item \emph{Non-additive measures}, which may not be combined along any dimension\textbf{, usually because the chosen formula prevents combining lower-level averages}
+\end{itemize}
+
+% A fact table's grain is the dimension of the measurement event that produces the fact row. All the
+% rows in a fact table should have a single uniform grain.
+
+% section fact_tables (end)
+
+\section{Dimensions} % (fold)
+\label{sec:dimensions}
+
+Unlike the fact tables which are comprised of just keys and numeric measurements, the dimension tables are filled with big and bulky
+descriptive attributes. These attributes are useful for constraining queries and labeling query result sets.
+
+The dimensions provide the context for the facts through their attributes . They are used for selecting and aggregating data at a
+desired level of detail. They are often organized into containment-like hierarchies of numerous levels. Each dimension represents a
+level of detail. For example, the place dimension can be analyzed at an attribute level of country, province, or city. Each of these
+levels represents a different granularity for the fact rows.
+
+Dimension rows are uniquely identified by a single key field. Kimball suggests that the dimension primary keys should be simple integers
+assigned in sequence starting with 1. These numbers act as surrogate keys for the dimension, and while they are meaningless they have
+the importance advantages for performance, mapping to integrate disparate sources, and tracking of changes in dimension attribute
+values, among others.
+
+Dimensions are often standardized when in a model there are different fact tables associated to different business processes. These
+standardized dimensions are known as conformed dimensions and they are shared across the enterprise's datawarehouse environment. Because
+they join with fact tables from various business processes, they must either be identical, or a subset of a more detailed dimension.
+
+Dimensions can also be degenerate. When a dimension is degenerate it has no attribute values to describe it. In such cases, a
+dimensional table is not build for that dimension, but instead it is kept in the fact table, and may be used as part of the fact table's
+primary key.
+
+Unlike fact tables, dimensions can change slowly over time. There are different methods for tracking or coping with attribute changes with a dimension, among them are:
+\begin{itemize}
+	\item Overwriting the old dimension attribute value with the new value.
+	\item Adding a new dimension row with the new value.
+	\item Adding a new dimension attribute for the old value.
+	\item Adding a new dimension
+\end{itemize}
+
+The dimensions in a star schema can be further normalized forming snowflake schemas. snowflake schemas contain one table for each
+dimension level avoiding redundancy. Kimball does not recommend this but he notes that they may be advantageous in some situations.
+
+% section dimensions (end)
+
+\section{Operations} % (fold)
+\label{sec:operations}
+The dimensional model naturally lends itself to certain types of operations that include:
+
+\begin{itemize}
+	\item \emph{Slice-and-dice} queries, which are used to reduce a cube. 
+	\item \emph{Drill-down and roll-up} queries, which are inverse operations that use dimension hierarchies to provide different levels of granularity for the facts.
+	\item \emph{Drill-across} queries, which perform joins on cubes that share one or more dimensions. 
+	\item \emph{Ranking or top n/bottom n queries}, which return only cells that appear at the top or bottom of a specified order.
+	\item \emph{Rotating a cube}, that allows users to see the data grouped by other dimensions.
+\end{itemize}
+
+% section operations (end)
+
+
+\section{Implementation} % (fold)
+\label{sec:implementation}
+
+Dimensional models can be implemented as Multidimensional (MOLAP), Relational OLAP (ROLAP) or Hybrid (HOLAP) systems. ROLAP systems use
+relational database technology for storing data and also employ specialized index structures such as bitmap indices to achieve good
+performance. ROLAP servers act as middleware servers between the relational back-end server where the datawarehouse is stored and the
+client front-end tools. MOLAP systems act as a native server architecture that does not exploit the functionality of a relational
+back-end. MOLAP provide better indexing properties to locate data, with the disadvantage of having poor storage utilization when the
+data is sparse. MOLAP servers adapt to sparse data though compression and secondary level storage representation. Finally, HOLAP
+architectures combine ROLAP and MOLAP technologies. MOLAP systems tend to perform better when the data is dense, while ROLAP servers
+tend to perform better when the data is sparse. Thus, HOLAP identifies dense and sparse regions of data and uses MOLAP and ROLAP
+respectively.
+
+% section implementation (end)
+
+\section{ETL} % (fold)
+\label{sec:etl}
+Building the datawarehouse from independent data sources involves 3 main steps:
+\begin{itemize}
+	\item Extracting the data from each source.
+	\item Transforming it to conform to the warehouse schema, and cleaning it.
+	\item Loading it into the warehouse.
+\end{itemize}
+
+The data extraction step consists in bringing data from different sources into a database where they can be modified and incorporated
+into the warehouse. Then a set of rules and scripts are used to transform the data form an input schema to a destination schema. For
+example, one could have a source that splits a customer's name into three fields: first name, middle initial, and last name and a
+datawarehouse schema that has only one field from customer's name. To incorporate this source would have to extract the records and then
+derive all three attribute values into one value.
+Data cleaning consists in fixing errors and differences in schema conventions. These differences may result in inaccurate query
+responses and consequently inaccurate mining models. Tools that help with data cleaning address problems such as duplicate elimination
+and data cleaning frameworks.
+Finally, after the data has been extracted and transformed. It may be necessary to perform additional preprocessing before that data is
+loaded. In this step, batch load utilities are used to check the integrity constraints; perform sorting, summarizing and other
+computations to build derived tables to be stored in the datawarehouse
+
+
+
+	
+% section etl (end)
+
+\textbf{SQL-based
+relational models do not handle well hierarchical dimensions.}
+
+
+\bibliographystyle{plain}
+\bibliography{}
+\end{document}
