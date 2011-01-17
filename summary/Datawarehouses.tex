@@ -181,14 +181,31 @@ respectively.
 
 % section dimensional_modeling (end)
 
+\section{Decision Support Systems} % (fold)
+\label{sec:decision_support_systems}
+
+Decision Support is a methodology designed to extract information from data and use it as a basis for decision making. The arrangement
+of computerized tools used to assist the managerial decision making within a business is called a decision support system (DSS). A DSS
+can be used in various areas within an organization and can be emphasized for solving specific problems. It has three principal
+components: a data warehouse server, online analytical processing and data mining tools, and back-end tools for populating the data
+warehouse.
+
+% section decision_support_systems (end)
+
 \section{Data Warehouses} % (fold)
 \label{sec:data_warehouses}
 
-A Data Warehouse (DW) is a database used for reporting. The dimensional logical design is often used in a data warehouse to facilitate
-the management of information. A data warehouse generally consists of an ETL tool, a database, a reporting tool and other facilitating
-tools, such as a Data Modeling tool. It maintains its functions in three layers: staging, integration, and access. Staging is used to
-store raw data for use by developers (analysis and support). The integration layer is used to integrate data and to have a level of
-abstraction from users. The access layer is for getting data out for users.
+A Data Warehouse (DW) is a database used for reporting on data consolidated by several operational databases. They tend to be much
+larger than operational databases, often hundreds of gigabytes to terabytes in size. The dimensional model provides the logical design
+used in a data warehouse to manage the information. A data warehouse generally consists of an ETL tool, a database, a reporting tool and
+other facilitating tools, such as a Data Modeling tool. It maintains its functions in three layers: staging, integration, and access.
+Staging is used to store raw data for use by developers (analysis and support). The integration layer is used to integrate data and to
+have a level of abstraction from users. The access layer is for getting data out for users.
+
+The construction of a data warehouse is a complex process and can take many years, some organizations choose to build data marts
+instead. The data mart is a small, single-subject data warehouse subset that supplies decision support to a specific departmental
+subset. They serve as a test vehicle for companies that wish to explore the potential benefits of Data Warehouses. Because they address
+only local or departmental problems they can involve complex integration problems later.
 
 \subsection{ETL} % (fold)
 \label{sub:etl}
@@ -221,7 +238,6 @@ warehouse. Other processes may take place to update the datawarehouse, these inc
 
 \textbf{SQL-based
 relational models do not handle well hierarchical dimensions.}
-
 
 \bibliographystyle{plain}
 \bibliography{}
