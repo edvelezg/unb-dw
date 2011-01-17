@@ -105,12 +105,12 @@ and/or degenerate dimensions.
 
 Facts have a certain granularity that is determined by the degree of measurement used. As an example, one may think of different degrees
 of measurement for a period of time such as day, month or year. The lowest grain or finest granularity is the day while the highest
-grain or coarsest granularity is the year.The measure of a fact consists of two components: the fact's numerical property, and a formula
-that allows simple aggregation of several finer measure values into one. Measures can be of three types:
+grain or coarsest granularity is the year. The measure of a fact consists of two components: the fact's numerical property, and a
+formula that allows simple aggregation of several finer measure values into one. Measures can be of three types:
 \begin{itemize}
 \item \emph{Additive measures}, which may be meaningfully combined along any dimension.
 \item \emph{Semi-additive measures}, which may not be combined along one or more dimensions.
-\item \emph{Non-additive measures}, which may not be combined along any dimension\textbf{, usually because the chosen formula prevents combining lower-level averages}
+\item \emph{Non-additive measures}, which may not be combined along any dimension, usually because the chosen formula prevents combining lower-level averages
 \end{itemize}
 
 % subsection fact_tables (end)
@@ -192,8 +192,8 @@ warehouse.
 
 % section decision_support_systems (end)
 
-\section{Data Warehouses} % (fold)
-\label{sec:data_warehouses}
+\subsection{Data Warehouses} % (fold)
+\label{sub:data_warehouses}
 
 A Data Warehouse (DW) is a database used for reporting on data consolidated by several operational databases. They tend to be much
 larger than operational databases, often hundreds of gigabytes to terabytes in size. The dimensional model provides the logical design
@@ -207,8 +207,31 @@ instead. The data mart is a small, single-subject data warehouse subset that sup
 subset. They serve as a test vehicle for companies that wish to explore the potential benefits of Data Warehouses. Because they address
 only local or departmental problems they can involve complex integration problems later.
 
-\subsection{ETL} % (fold)
-\label{sub:etl}
+The datawarehouse consists of a logical design and a physical design. The logical design can be the dimensional model used to manage the
+information, and the physical design consists of indices, and materialized views to speed up disk operations.
+
+% subsection data_warehouses (end)
+
+\subsection{Online Analytical Processing and Data Mining Tools} % (fold)
+\label{sub:online_analytical_procesing_and_data_mining_tools}
+
+Online analytical processing applications seek to swiftly answer multi-dimensional analytical queries. Queries in OLAP applications
+aggregate numeric measures at different levels in dimensional hierarchies. These queries in turn serve the purpose of generating reports
+for analysis and data mining. This layer includes a conceptual data model and server architectures. The conceptual data model depends on
+dimensions that describe the entities in the transaction. Depending on the logical design some OLAP analysis may involve more complex
+statistical calculations than simple aggregations such as sum, count, and average. The server architectures for OLAP can be ROLAP, MOLAP
+or HOLAP discussed in \ref{sub:implementation}. Even though traditional relational servers do not efficiently process complex OLAP
+queries or support multidimensional data views, three types of relational DBMS servers—relational, multidimensional, and hybrid online
+analytical processing—now support OLAP on data warehouses built with relational database systems.
+
+Data mining tools extract patterns and characteristics from data providing advanced predictive and analytical functionality to the DSS.
+The process of specifying and achieving a goal through iterative data mining is called Knowledge Discovery. It typically consists of
+three phases: data preparation, model building and evaluation, and model deployment.
+
+% subsection online_analytical_procesing_and_data_mining_tools (end)
+
+\subsection{Back-end Tools} % (fold)
+\label{sub:back_end_tools}
 Populating the datawarehouse from independent data sources involves a process of 3 main phases: Extracting the data from each source,
 transforming it to conform to the warehouse schema and cleaning it, and loading it into the warehouse. This process is known as ETL
 (Extracting, Transforming and Loading).
@@ -232,12 +255,8 @@ warehouse. Other processes may take place to update the datawarehouse, these inc
 	\item \emph{Refreshing data}, which consists in propagating updates on the base tables to materialized views and indexes stored in the warehouse.
 	\item \emph{Meta-data maintainance}, which consists in updating the definitions, data ownership, and other information required to manage the datawarehouse. 
 \end{itemize}
-% subsection etl (end)
 
-% section data_warehouses (end)
-
-\textbf{SQL-based
-relational models do not handle well hierarchical dimensions.}
+% subsection back_end_tools (end)
 
 \bibliographystyle{plain}
 \bibliography{}
