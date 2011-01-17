@@ -184,6 +184,12 @@ respectively.
 \section{Data Warehouses} % (fold)
 \label{sec:data_warehouses}
 
+A Data Warehouse (DW) is a database used for reporting. The dimensional logical design is often used in a data warehouse to facilitate
+the management of information. A data warehouse generally consists of an ETL tool, a database, a reporting tool and other facilitating
+tools, such as a Data Modeling tool. It maintains its functions in three layers: staging, integration, and access. Staging is used to
+store raw data for use by developers (analysis and support). The integration layer is used to integrate data and to have a level of
+abstraction from users. The access layer is for getting data out for users.
+
 \subsection{ETL} % (fold)
 \label{sub:etl}
 Populating the datawarehouse from independent data sources involves a process of 3 main phases: Extracting the data from each source,
