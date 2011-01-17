@@ -63,31 +63,23 @@
 
 \maketitle
 
-Dimensional modeling is a technique of logical design for structuring data so that it is intuitive to business users and delivers fast
-query performance. They are often considered the more appropriate models for OLAP applications as opposed to normalized. The normalized
-models we talk about, go up to the third normal form (3NF). Industry also refers to them as 3NF models or entity-relationship (ER)
-models. These models seek to reduce redundancies, and are considered better for transactional processing or OLTP applications.
+Dimensional modeling is a technique of logical design for structuring data so that it is intuitive to business users and delivers fast query performance. They
+are often considered the more appropriate models for OLAP applications as opposed to normalized. The normalized models we talk about, go up to the third normal
+form (3NF). Industry also refers to them as 3NF models or entity-relationship (ER) models. These models seek to reduce redundancies, and are considered better
+for transactional processing or OLTP applications.
 
-Normalized models and dimensional models contain the same information, but are structured differently. The key difference between them
-is the degree of normalization. While normalized models are completely normalized to 3NF, dimensional models normalize some tables to
-2NF and others to 3NF. Dimensional modeling divides the information into measurements and context. The measurements are captured by the
-organizations business processes and are usually numeric; they are called the \textbf{facts}. The context is represented by the
-dimensions which help answer the questions of who, what, when, where, why and how of a measurement. Dimensional models may be stored as
-star schemas or cubes. When stored in a relational database platform, they are called star schemas, and when stored in an OLAP structure
-they are called cubes. 
+Normalized models and dimensional models contain the same information, but are structured differently. The key difference between them is the degree of
+normalization. While normalized models are completely normalized to 3NF, dimensional models normalize some tables to 2NF and others to 3NF. Dimensional modeling
+divides the information into measurements and context. The measurements are captured by the organizations business processes and are usually numeric; they are
+called the facts. The context is represented by the dimensions which help answer the questions of who, what, when, where, why and how of a measurement.
+Dimensional models may be stored as star schemas or cubes. When stored in a relational database platform, they are called star schemas, and when stored in an
+OLAP structure they are called cubes.
 
 Dimensional models are applied in three important areas: Datawarehouses, Online-Analytical processing (OLAP), and data mining. They also have important benefits
 for business intelligence which include understandability and query performance among others. Dimensional models are often easier to understand than normalized
 models. Their design allow users to disregard irrelevant dimensions. Query performance is a second benefit that comes through dimensional modeling. The number of
-join operations is greatly reduced when using a dimensional model. Furthermore, the joins performed in a dimensional model, known as ``star joins'', may be improved through indexing or precomputation.
-
-Fewer joins is one part. The other thing he says is that kind of join that you *do* still require will be "star joins". This is a very special case, where the
-main fact table is being joined to dimension tables *via foreign keys*. That means that a query optimizer can use special algorithms, or we can develop special
-indexes (probably bitmap based), or that the query optimizer can at least accurately predict how big the result of the join will be, thereby avoiding making a
-bad query plan due to bad estimates/
-
-
-% section normalized_vs_dimensional_models (end)
+join operations is greatly reduced when using a dimensional model. Furthermore, the query plan can be improved through joins performed in a dimensional model,
+known as ``star joins''. Star joins may be performed faster through indexing or result set size prediction.
 
 \section{Fact Tables} % (fold)
 \label{sec:fact_tables}
