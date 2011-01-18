@@ -195,20 +195,18 @@ warehouse.
 \subsection{Data Warehouses} % (fold)
 \label{sub:data_warehouses}
 
-A Data Warehouse (DW) is a database used for reporting on data consolidated by several operational databases. They tend to be much
-larger than operational databases, often hundreds of gigabytes to terabytes in size. The dimensional model provides the logical design
-used in a data warehouse to manage the information. A data warehouse generally consists of an ETL tool, a database, a reporting tool and
-other facilitating tools, such as a Data Modeling tool. It maintains its functions in three layers: staging, integration, and access.
-Staging is used to store raw data for use by developers (analysis and support). The integration layer is used to integrate data and to
-have a level of abstraction from users. The access layer is for getting data out for users.
+A Data Warehouse (DW) is a database used for reporting on data consolidated by several operational databases. They tend to be
+much larger than operational databases, often hundreds of gigabytes to terabytes in size. The dimensional model provides the
+logical design used in a data warehouse to manage the information. A data warehouse generally consists of an ETL tool, a
+database, a reporting tool and other facilitating tools, such as a Data Modeling tool. It maintains its functions in three
+layers: staging, integration, and access. Staging is used to store raw data for use by developers (analysis and support). The
+integration layer is used to integrate data and to have a level of abstraction from users. The access layer is for getting
+data out for users.
 
-The construction of a data warehouse is a complex process and can take many years, some organizations choose to build data marts
-instead. The data mart is a small, single-subject data warehouse subset that supplies decision support to a specific departmental
-subset. They serve as a test vehicle for companies that wish to explore the potential benefits of Data Warehouses. Because they address
-only local or departmental problems they can involve complex integration problems later.
-
-The datawarehouse consists of a logical design and a physical design. The logical design can be the dimensional model used to manage the
-information, and the physical design consists of indices, and materialized views to speed up disk operations.
+The construction of a data warehouse is a complex process and can take many years, some organizations choose to build data
+marts instead. The data mart is a small, single-subject data warehouse subset that supplies decision support to a specific
+departmental subset. They serve as a test vehicle for companies that wish to explore the potential benefits of Data
+Warehouses. Because they address only local or departmental problems they can involve complex integration problems later.
 
 % subsection data_warehouses (end)
 
@@ -239,22 +237,21 @@ The data extraction step consists in bringing data from different sources into a
 into the warehouse.
 
 The transformation process uses a set of rules and scripts to transform the data from an input schema to a destination schema
-representation. For example, one could have a source that splits a customer's name into three fields: first name, middle initial, and
-last name and a datawarehouse schema that only uses one field from customer's name. To incorporate this source we would have to extract
-the records and then derive all three attribute values into one value. 
+representation. For example, one could have a source that splits a customer's name into three fields: first name, middle
+initial, and last name and a datawarehouse schema that only uses one field from customer's name. To incorporate this source
+we would have to extract the records and then derive all three attribute values into one value.
 
-Data cleaning consists in fixing errors and differences in schema conventions. These differences may result in inaccurate query
-responses and consequently inaccurate mining models. Tools that help with data cleaning address problems such as duplicate elimination
-and data cleaning frameworks.
+Data cleaning consists in fixing errors and differences in schema conventions. These differences may result in inaccurate
+query responses and consequently inaccurate mining models. Tools that help with data cleaning address problems such as
+duplicate elimination and data cleaning frameworks.
 
-Finally, after the data has been extracted and transformed. It may be necessary to perform additional preprocessing before that data is
-loaded. In this final phase, batch load utilities may be used to check the integrity constraints; perform sorting, summarizing and other
-computations. Derived tables may also be build to be stored in the datawarehouse. After completing the ETL process to populate the
-warehouse. Other processes may take place to update the datawarehouse, these include:
-\begin{itemize}
-	\item \emph{Refreshing data}, which consists in propagating updates on the base tables to materialized views and indexes stored in the warehouse.
-	\item \emph{Meta-data maintainance}, which consists in updating the definitions, data ownership, and other information required to manage the datawarehouse. 
-\end{itemize}
+Finally, after the data has been extracted and transformed. It may be necessary to perform additional preprocessing before
+that data is loaded. In this final phase, batch load utilities may be used to check the integrity constraints; perform
+sorting, summarizing and other computations. Derived tables may also be build to be stored in the datawarehouse. After
+completing the ETL process to populate the warehouse. Other processes may take place to update the datawarehouse, these
+include: \begin{itemize} \item \emph{Refreshing data}, which consists in propagating updates on the base tables to
+materialized views and indexes stored in the warehouse. \item \emph{Meta-data maintainance}, which consists in updating the
+definitions, data ownership, and other information required to manage the datawarehouse. \end{itemize}
 
 % subsection back_end_tools (end)
 
