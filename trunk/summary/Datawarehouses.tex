@@ -245,13 +245,13 @@ Data cleaning consists in fixing errors and differences in schema conventions. T
 query responses and consequently inaccurate mining models. Tools that help with data cleaning address problems such as
 duplicate elimination and data cleaning frameworks.
 
-Finally, after the data has been extracted and transformed. It may be necessary to perform additional preprocessing before
-that data is loaded. In this final phase, batch load utilities may be used to check the integrity constraints; perform
-sorting, summarizing and other computations. Derived tables may also be build to be stored in the datawarehouse. After
-completing the ETL process to populate the warehouse. Other processes may take place to update the datawarehouse, these
-include: \begin{itemize} \item \emph{Refreshing data}, which consists in propagating updates on the base tables to
-materialized views and indexes stored in the warehouse. \item \emph{Meta-data maintainance}, which consists in updating the
-definitions, data ownership, and other information required to manage the datawarehouse. \end{itemize}
+Finally, after the data has been extracted and transformed. It may be necessary to perform additional preprocessing before that data is loaded. In this final
+phase, batch load utilities may be used to check the integrity constraints; perform sorting, summarizing and other computations. Derived tables may also be build
+to be stored in the datawarehouse. After completing the ETL process, other processes may take place to update the datawarehouse, these include: 
+\begin{itemize} 
+	\item \emph{Refreshing data}, which consists in propagating updates on the base tables to materialized views and indexes stored in the warehouse.
+	\item \emph{Meta-data maintainance}, which consists in updating the definitions, data ownership, and other information required to manage the datawarehouse. 
+\end{itemize}
 
 % subsection back_end_tools (end)
 
