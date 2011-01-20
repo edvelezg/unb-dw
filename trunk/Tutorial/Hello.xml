@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="MacRoman"?>
+<Rows>
+ <Row><last_name>Suarez</last_name> <name>Maria</name> <msg>Hello, Maria!</msg> </Row>
+ <Row><last_name>Guimaraes</last_name> <name>Joao</name> <msg>Hello, Joao!</msg> </Row>
+ <Row><last_name>Rush</last_name> <name>Jennifer</name> <msg>Hello, Jennifer!</msg> </Row>
+ <Row><last_name>Ortiz</last_name> <name>Camila</name> <msg>Hello, Camila!</msg> </Row>
+ <Row><last_name>Rodriguez</last_name> <name>Carmen</name> <msg>Hello, Carmen!</msg> </Row>
+ <Row><last_name>da Silva</last_name> <name>Zoe</name> <msg>Hello, Zoe!</msg> </Row>
+</Rows>
