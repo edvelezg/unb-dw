@@ -97,7 +97,7 @@ attributes. To do this, the power set of the columns participating in the CUBE o
 columns A, B, and C, the power set would be {{}, {A}, {B}, {C}, {A, B}, {B, C}, {A, C}, {A, B, C}}. The CUBE operator returns
 a table with padding values named ‘all’ for the dimensions whose values are not grouped. The value ‘all’ represents the set of
 all possible values for a given dimension. The resulting CUBE is represented as a relation of (the product of $C_i+1$) rows.
-The cardinality of each dimension is incremented by 1 because of the new extra value ‘ALL’ that is added to pad cells which
+The cardinality of each dimension, $C_i$, is incremented by 1 because of the new extra value ‘ALL’ that is added to pad cells which
 represent the entire set of elements in a dimension. Alternatively, the cells having the entire set of elements of a dimension
 can be padded with the ‘NULL’ value, but this may create ambiguity if the dimension allows NULLs.
  
@@ -130,6 +130,4 @@ functions are classified as follows:
 More efficient algorithms than the $2^n$-algorithm exist when using distributive and algebraic functions. However, for
 holistic aggregation functions, the authors state that they do not know of more efficient algorithms than the $2^n$ algorithm.
 
-\bibliographystyle{plain}
-\bibliography{}
 \end{document}
