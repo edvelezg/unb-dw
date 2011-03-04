@@ -108,9 +108,18 @@ union of the groupings that can be formed with the different prefixes of the dim
 
 The authors extend SQL to support combinations of GROUP BY, ROLLUP and CUBE. These are organized in a compound order where the
 “most powerful” operator, CUBE, is at the core, followed by ROLLUP and GROUP BY as shown:
-GROUP BY <select list>
-	ROLLUP <select list>
-		CUBE <select list>
+
+\begin{tabbing}
+GROUP BY \= $<$select list$>$\\
+\> ROLLUP \= $<$select list$>$\\
+\> \> CUBE \= $<$select list$>$\\
+\end{tabbing}
+
+% \begin{tabbing}
+% GROUP BY select list
+% \> ROLLUP select list
+% \> \> CUBE select list
+% \end{tabbing} 
 Gray et al. also extend the SQL syntax to support decorations. Decorations are attributes that are functionally dependent on
 the attribute that is being aggregated. The selection of decorations is not allowed in Standard SQL. The simplest and slowest
 approach for computing the cube is the $2^n$-algorithm which makes $T\times2^n$ calls to a function. Here, $T$ is the cardinality of
