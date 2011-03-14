@@ -63,7 +63,7 @@ class StandAloneAnnie
      */
     public static void main(String args[]) throws GateException, IOException {
         // initialise the GATE library
-        System.setProperty("gate.home", "C:\\Program Files (x86)\\GATE-6.0");
+        System.setProperty("gate.home", "/Applications/GATE-6.0");
 
         Out.prln("Initialising GATE...");
         Gate.init();
