@@ -373,6 +373,8 @@
 			Name="(default package)"
 			Type="Package">
 			<F N="asd"/>
+			<F N="classpath.txt"/>
+			<F N="command.txt"/>
 			<F N="error.txt"/>
 			<F N="Error2.txt"/>
 			<F N="Main.java"/>
