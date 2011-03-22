@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Rows>
+ <Row><Produit>Bouzmagic</Produit> <Categorie> Maison</Categorie> <Ventes>432</Ventes> <Prix>2.44</Prix> <Total_Sales> 1054.08</Total_Sales> </Row>
+ <Row><Produit>Bouzmagic Plus</Produit> <Categorie> Maison</Categorie> <Ventes>800</Ventes> <Prix>19</Prix> <Total_Sales> 15200.0</Total_Sales> </Row>
+ <Row><Produit>Plouzmagic</Produit> <Categorie> Pelouse</Categorie> <Ventes>4000</Ventes> <Prix>12.59</Prix> <Total_Sales> 50360.0</Total_Sales> </Row>
+ <Row><Produit>Plouzmagic Plus</Produit> <Categorie> Pelouse</Categorie> <Ventes>809</Ventes> <Prix>22</Prix> <Total_Sales> 17798.0</Total_Sales> </Row>
+ <Row><Produit>Plouzmagic Plus Plus</Produit> <Categorie> Pelouse</Categorie> <Ventes>43211</Ventes> <Prix>1.99</Prix> <Total_Sales> 85989.89</Total_Sales> </Row>
+</Rows>
