@@ -1,0 +1,1 @@
+I created CSV file inputs for sales, categories, and prices. They all have in common the Product field. The Get Field from header button proved useful to derive the types.
