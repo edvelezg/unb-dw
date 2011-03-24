@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+system("./fixFile.rb")
 def getOccupations(authors)
   count = 1
   # getDates(authors)
