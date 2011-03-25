@@ -372,7 +372,6 @@
 		<Folder
 			Name="(default package)"
 			Type="Package">
-			<F N="asd"/>
 			<F N="classpath.txt"/>
 			<F N="command.txt"/>
 			<F N="error.txt"/>
