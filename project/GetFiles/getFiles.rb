@@ -13,7 +13,7 @@
 require 'rubygems'
 require 'nokogiri'
 
-html = File.read("gutenberg-1.html")
+html = File.read("../gutenberg-1.html")
 
 doc = Nokogiri::HTML(html)
 arr = doc.search('a').select { |e| e['href'][/\.txt$/] }.map { |e| e['href'] }
