@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-echo "./getFiles.rb > files.txt"
-./getFiles.rb > files.txt
-
+# ./getFiles.rb > files.txt
+# ./downloadFiles.rb
+# ./detectLanguage.rb
