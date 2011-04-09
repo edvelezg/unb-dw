@@ -1,61 +1,86 @@
-// javac -classpath ../hadoop-0.20.2-core.jar -d classes WordCount.java
-// jar -cvf /Users/hadoop/Documents/hadoop-0.20.2/wordcount/wordcount.jar -C classes/ .
+/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.hadoop.examples;
 
-package org.myorg;
- 
 import java.io.IOException;
-import java.util.*;
+import java.util.StringTokenizer;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.conf.*;
-import org.apache.hadoop.io.*;
-import org.apache.hadoop.mapred.*;
-import org.apache.hadoop.util.*;
-   
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.util.GenericOptionsParser;
+
 public class WordCount {
 
-    public static class Map extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable> {
-      private final static IntWritable one = new IntWritable(1);
-      private Text word = new Text();
-
-      public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
-        String line = value.toString();
-        StringTokenizer tokenizer = new StringTokenizer(line);
-		Map mysplit = Context().getInputSplit();
-        while (tokenizer.hasMoreTokens()) {
-          word.set("--" + tokenizer.nextToken());
-          output.collect(word, one);
-        }
+  public static class TokenizerMapper 
+       extends Mapper<Object, Text, Text, IntWritable>{
+    
+    private final static IntWritable one = new IntWritable(1);
+    private Text word = new Text();
+      
+    public void map(Object key, Text value, Context context
+                    ) throws IOException, InterruptedException {
+      StringTokenizer itr = new StringTokenizer(value.toString());
+      while (itr.hasMoreTokens()) {
+        word.set(itr.nextToken());
+        context.write(word, one);
       }
     }
+  }
+  
+  public static class IntSumReducer 
+       extends Reducer<Text,IntWritable,Text,IntWritable> {
+    private IntWritable result = new IntWritable();
 
-    public static class Reduce extends MapReduceBase implements Reducer<Text, IntWritable, Text, IntWritable> {
-      public void reduce(Text key, Iterator<IntWritable> values, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
-        int sum = 0;
-        while (values.hasNext()) {
-          sum += values.next().get();
-        }
-        output.collect(key, new IntWritable(sum));
+    public void reduce(Text key, Iterable<IntWritable> values, 
+                       Context context
+                       ) throws IOException, InterruptedException {
+      int sum = 0;
+      for (IntWritable val : values) {
+        sum += val.get();
       }
+      result.set(sum);
+      context.write(key, result);
     }
+  }
 
-    public static void main(String[] args) throws Exception {
-      JobConf conf = new JobConf(WordCount.class);
-      conf.setJobName("wordcount");
-
-      conf.setOutputKeyClass(Text.class);
-      conf.setOutputValueClass(IntWritable.class);
-
-      conf.setMapperClass(Map.class);
-      conf.setCombinerClass(Reduce.class);
-      conf.setReducerClass(Reduce.class);
-
-      conf.setInputFormat(TextInputFormat.class);
-      conf.setOutputFormat(TextOutputFormat.class);
-
-      FileInputFormat.setInputPaths(conf, new Path(args[0]));
-      FileOutputFormat.setOutputPath(conf, new Path(args[1]));
-
-      JobClient.runJob(conf);
+  public static void main(String[] args) throws Exception {
+    Configuration conf = new Configuration();
+    String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
+    if (otherArgs.length != 2) {
+      System.err.println("Usage: wordcount <in> <out>");
+      System.exit(2);
     }
+    Job job = new Job(conf, "word count");
+    job.setJarByClass(WordCount.class);
+    job.setMapperClass(TokenizerMapper.class);
+    job.setCombinerClass(IntSumReducer.class);
+    job.setReducerClass(IntSumReducer.class);
+    job.setOutputKeyClass(Text.class);
+    job.setOutputValueClass(IntWritable.class);
+    FileInputFormat.addInputPath(job, new Path(otherArgs[0]));
+    FileOutputFormat.setOutputPath(job, new Path(otherArgs[1]));
+    System.exit(job.waitForCompletion(true) ? 0 : 1);
+  }
 }
