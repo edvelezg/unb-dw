@@ -68,7 +68,7 @@ public class WordCount {
   public static void main(String[] args) throws Exception {
     Configuration conf = new Configuration();
 //  String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
-    if (otherArgs.length != 2) {
+    if (args.length != 2) {
       System.err.println("Usage: wordcount <in> <out>");
       System.exit(2);
     }
