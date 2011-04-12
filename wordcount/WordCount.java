@@ -17,7 +17,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 
 public class WordCount {
 
-  public static class TokenizerMapper 
+  public static class HistogramsMapper 
        extends Mapper<Object, Text, Text, IntWritable>{
     
     private final static IntWritable one = new IntWritable(1);
@@ -29,6 +29,22 @@ public class WordCount {
       while (itr.hasMoreTokens()) {
 		String str = ((FileSplit) context.getInputSplit()).getPath().getName();
         word.set(str + "--" + itr.nextToken().length());
+        context.write(word, one);
+      }
+    }
+  }
+
+  public static class CorpusHistogramMapper 
+       extends Mapper<Object, Text, Text, IntWritable>{
+    
+    private final static IntWritable one = new IntWritable(1);
+    private Text word = new Text();
+      
+    public void map(Object key, Text value, Context context
+                    ) throws IOException, InterruptedException {
+      StringTokenizer itr = new StringTokenizer(value.toString());
+      while (itr.hasMoreTokens()) {
+        word.set(itr.nextToken().length() + "");
         context.write(word, one);
       }
     }
@@ -59,7 +75,7 @@ public class WordCount {
     // }
     Job job = new Job(conf, "word count");
     job.setJarByClass(WordCount.class);
-    job.setMapperClass(TokenizerMapper.class);
+    job.setMapperClass(CorpusHistogramMapper.class);
     job.setCombinerClass(IntSumReducer.class);
     job.setReducerClass(IntSumReducer.class);
     job.setOutputKeyClass(Text.class);
