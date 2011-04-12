@@ -7,12 +7,11 @@ if [ `uname` == "CYGWIN_NT-6.1-WOW64" ]; then
     javac -classpath ../hadoop-0.20.2-core.jar -d classes WordCount.java
     jar -cvf "$winpath/wordcount.jar" -C classes/ .
 else
-  echo "On MacOS"
-    echo $curpath
+  	echo "On MacOS"
+    # echo $curpath
     javac -classpath ../hadoop-0.20.2-core.jar -d classes WordCount.java
     jar -cvf "$curpath/wordcount.jar" -C classes/ .
 fi
-
 
 
 
