@@ -76,6 +76,7 @@ public class WordCount {
     Job job = new Job(conf, "word count");
     job.setJarByClass(WordCount.class);
     job.setMapperClass(CorpusHistogramMapper.class);
+    job.setMapperClass(HistogramsMapper.class);
     job.setCombinerClass(IntSumReducer.class);
     job.setReducerClass(IntSumReducer.class);
     job.setOutputKeyClass(Text.class);
