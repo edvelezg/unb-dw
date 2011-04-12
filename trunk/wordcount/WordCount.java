@@ -1,21 +1,4 @@
-/**
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package org.apache.hadoop.examples;
+package org.myorg;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -30,6 +13,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
+import org.apache.hadoop.mapreduce.lib.input.FileSplit;
 
 public class WordCount {
 
@@ -43,7 +27,8 @@ public class WordCount {
                     ) throws IOException, InterruptedException {
       StringTokenizer itr = new StringTokenizer(value.toString());
       while (itr.hasMoreTokens()) {
-        word.set(itr.nextToken());
+		String str = ((FileSplit) context.getInputSplit()).getPath().getName();
+        word.set(str + "--" + itr.nextToken().length());
         context.write(word, one);
       }
     }
@@ -67,11 +52,11 @@ public class WordCount {
 
   public static void main(String[] args) throws Exception {
     Configuration conf = new Configuration();
-//  String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
-    if (args.length != 2) {
-      System.err.println("Usage: wordcount <in> <out>");
-      System.exit(2);
-    }
+    // String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
+    // if (otherArgs.length != 2) {
+    //   System.err.println("Usage: wordcount <in> <out>");
+    //   System.exit(2);
+    // }
     Job job = new Job(conf, "word count");
     job.setJarByClass(WordCount.class);
     job.setMapperClass(TokenizerMapper.class);
@@ -79,10 +64,8 @@ public class WordCount {
     job.setReducerClass(IntSumReducer.class);
     job.setOutputKeyClass(Text.class);
     job.setOutputValueClass(IntWritable.class);
-
-    FileInputFormat.setInputPaths(conf, new Path(args[0]));
-    FileOutputFormat.setOutputPath(conf, new Path(args[1]));
-
+    FileInputFormat.addInputPath(job, new Path(args[0]));
+    FileOutputFormat.setOutputPath(job, new Path(args[1]));
     System.exit(job.waitForCompletion(true) ? 0 : 1);
   }
 }
