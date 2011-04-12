@@ -1,0 +1,18 @@
+When I issue this command:
+jar -cvf "C:\Users\UNBSJ\hadoop-0.21.0\wordcount\wordcount.jar" -C classes/ .
+
+I do not understand the following error:
+
+C:\Users\UNBSJ\hadoop-0.21.0\wordcount>sh compile.sh
+/cygdrive/c/Users/UNBSJ/hadoop-0.21.0/wordcount
+java.io.FileNotFoundException: \cygdrive\c\Users\UNBSJ\hadoop-0.21.0\wordcount\w
+ordcount.jar (The system cannot find the path specified)
+        at java.io.FileOutputStream.open(Native Method)
+        at java.io.FileOutputStream.<init>(FileOutputStream.java:179)
+        at java.io.FileOutputStream.<init>(FileOutputStream.java:70)
+        at sun.tools.jar.Main.run(Main.java:169)
+        at sun.tools.jar.Main.main(Main.java:1149)
+
+This was due to the stupid way that windows has its paths, thus I fixed it
+by using cygpath to correct the path issue.
+
