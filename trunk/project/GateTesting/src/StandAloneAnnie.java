@@ -112,7 +112,7 @@ class StandAloneAnnie
             Document doc = (Document) iter.next();
             AnnotationSet defaultAnnotSet = doc.getAnnotations();
             Set annotTypesRequired = new HashSet();
-            //annotTypesRequired.add("Person");
+            annotTypesRequired.remove("paragraph");
             annotTypesRequired.add("Location");
             annotTypesRequired.add("Sentence");
             Set<Annotation> peopleAndPlaces =
@@ -145,8 +145,8 @@ class StandAloneAnnie
                 long insertPositionEnd;
                 long insertPositionStart;
                 // insert anotation tags backward
-                Out.prln("Unsorted annotations count: "+peopleAndPlaces.size());
-                Out.prln("Sorted annotations count: "+sortedAnnotations.size());
+                Out.prln("Unsorted annotations count: " + peopleAndPlaces.size());
+                Out.prln("Sorted annotations count: " + sortedAnnotations.size());
                 for (int i=sortedAnnotations.size()-1; i>=0; --i)
                 {
                     currAnnot = (Annotation) sortedAnnotations.get(i);
@@ -220,6 +220,7 @@ class StandAloneAnnie
                 Out.prln("Repositioning: "+info);
             }
 
+            // Write XML document
             String xmlDocument = doc.toXml(peopleAndPlaces, false);
             String fileName = new String("StANNIE_toXML_" + count + ".HTML");
             FileWriter writer = new FileWriter(fileName);
