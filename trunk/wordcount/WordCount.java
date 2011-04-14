@@ -82,9 +82,9 @@ public class WordCount
         //   System.err.println("Usage: wordcount <in> <out>");
         //   System.exit(2);
         // }
-        Job job = new Job(conf, "word count");
+        Job job = new Job(conf, "CorpusHisto");
         job.setJarByClass(WordCount.class);
-        job.setMapperClass(HistogramsMapper.class);
+        job.setMapperClass(CorpusHistogramMapper.class);
         job.setCombinerClass(IntSumReducer.class);
         job.setReducerClass(IntSumReducer.class);
         job.setOutputKeyClass(Text.class);
@@ -92,19 +92,35 @@ public class WordCount
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
+		job.waitForCompletion(true);
+
         FileSystem hdfs = FileSystem.get(conf);
-        Path path = new Path("/user/hadoop/output/part-r-00000");
-        boolean isExists = hdfs.exists(path);
-        if (isExists)
+		Path fromPath = new Path("/user/hadoop/output/part-r-00000");
+		Path toPath = new Path("/user/hadoop/output/corpusHisto");
+
+		// renaming to corpusHisto
+        boolean isRenamed = hdfs.rename(fromPath, toPath);
+        if (isRenamed)
         {
-            System.out.println("it exists");
+            System.out.println("Renamed to /user/hadoop/output/corpusHisto!");
         }
         else
         {
-            System.out.println("it dne");
+            System.out.println("Not Renamed!");
         }
 
-//      System.exit(job.waitForCompletion(true) ? 0 : 1);
+		job = new Job(conf, "DSHistos");
+        job.setJarByClass(WordCount.class);
+        job.setMapperClass(HistogramsMapper.class);
+        job.setCombinerClass(IntSumReducer.class);
+        job.setReducerClass(IntSumReducer.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
+        // FileInputFormat.addInputPath(job, new Path(args[0]));
+        // FileOutputFormat.setOutputPath(job, new Path(args[1]));
+
+
+     	System.exit( job.waitForCompletion(true) ? 0 : 1);
 // 
 //      job.waitForCompletion(true);
 //      Job job2 = new Job(conf, "word count");
