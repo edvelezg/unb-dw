@@ -92,35 +92,37 @@ public class WordCount
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-		job.waitForCompletion(true);
+        job.waitForCompletion(true);
 
         FileSystem hdfs = FileSystem.get(conf);
-		Path fromPath = new Path("/user/hadoop/output/part-r-00000");
-		Path toPath = new Path("/user/hadoop/output/corpusHisto");
+        Path fromPath = new Path("/user/hadoop/output/part-r-00000");
+        Path toPath = new Path("/user/hadoop/histos/corpusHisto");
 
-		// renaming to corpusHisto
+        // renaming to corpusHisto
         boolean isRenamed = hdfs.rename(fromPath, toPath);
         if (isRenamed)
         {
-            System.out.println("Renamed to /user/hadoop/output/corpusHisto!");
+            System.out.println("Renamed to /user/hadoop/histos/corpusHisto!");
         }
         else
         {
             System.out.println("Not Renamed!");
         }
 
-		job = new Job(conf, "DSHistos");
+        hdfs.delete(new Path("/user/hadoop/output"), true);
+
+        job = new Job(conf, "DSHistos");
         job.setJarByClass(WordCount.class);
         job.setMapperClass(HistogramsMapper.class);
         job.setCombinerClass(IntSumReducer.class);
         job.setReducerClass(IntSumReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
-        // FileInputFormat.addInputPath(job, new Path(args[0]));
-        // FileOutputFormat.setOutputPath(job, new Path(args[1]));
+        FileInputFormat.addInputPath(job, new Path(args[0]));
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
 
-     	System.exit( job.waitForCompletion(true) ? 0 : 1);
+        System.exit( job.waitForCompletion(true) ? 0 : 1);
 // 
 //      job.waitForCompletion(true);
 //      Job job2 = new Job(conf, "word count");
