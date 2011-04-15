@@ -16,3 +16,16 @@ ordcount.jar (The system cannot find the path specified)
 This was due to the stupid way that windows has its paths, thus I fixed it
 by using cygpath to correct the path issue.
 
+
+This is a strange error I am getting when trying to run two jobs as I have them,
+I need to think this throughly first.
+
+Exception in thread "main" java.lang.IllegalStateException: Job in state RUNNING instead of DEFINE
+	at org.apache.hadoop.mapreduce.Job.ensureState(Job.java:60)
+	at org.apache.hadoop.mapreduce.Job.setMapperClass(Job.java:115)
+	at org.myorg.WordCount.main(WordCount.java:98)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at org.apache.hadoop.util.RunJar.main(RunJar.java:156)
