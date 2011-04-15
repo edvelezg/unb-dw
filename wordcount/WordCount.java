@@ -76,12 +76,13 @@ public class WordCount
     }
 
     public static void main(String[] args) throws Exception {
-        Configuration conf = new Configuration();
         // String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
         // if (otherArgs.length != 2) {
         //   System.err.println("Usage: wordcount <in> <out>");
         //   System.exit(2);
         // }
+// Run job 1
+        Configuration conf = new Configuration();
         Job job = new Job(conf, "CorpusHisto");
         job.setJarByClass(WordCount.class);
         job.setMapperClass(CorpusHistogramMapper.class);
@@ -89,10 +90,16 @@ public class WordCount
         job.setReducerClass(IntSumReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
+
+		// job.setInputFormatClass(FileInputFormat.class);
+		// job.setOutputFormatClass(FileOutputFormat.class);
+		
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, "/user/hadoop/histos");
 
         job.waitForCompletion(true);
+
+// Rename the file
 
         FileSystem hdfs = FileSystem.get(conf);
         Path fromPath = new Path("/user/hadoop/histos/part-r-00000");
@@ -119,21 +126,13 @@ public class WordCount
         job.setReducerClass(IntSumReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
+
+		// job.setInputFormatClass(FileInputFormat.class);
+		// job.setOutputFormatClass(FileOutputFormat.class);
+		
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-
-        System.exit( job.waitForCompletion(true) ? 0 : 1);
-// 
-//      job.waitForCompletion(true);
-//      Job job2 = new Job(conf, "word count");
-//      job2.setJarByClass(WordCount.class);
-//      job.setMapperClass(CorpusHistogramMapper.class);
-//      job2.setCombinerClass(IntSumReducer.class);
-//      job2.setReducerClass(IntSumReducer.class);
-//      job2.setOutputKeyClass(Text.class);
-//      job2.setOutputValueClass(IntWritable.class);
-//      FileInputFormat.addInputPath(job2, new Path(args[0]));
-//      FileOutputFormat.setOutputPath(job2, new Path(args[1]));
+        System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }
