@@ -90,12 +90,12 @@ public class WordCount
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
         FileInputFormat.addInputPath(job, new Path(args[0]));
-        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+        FileOutputFormat.setOutputPath(job, "/user/hadoop/histos");
 
         job.waitForCompletion(true);
 
         FileSystem hdfs = FileSystem.get(conf);
-        Path fromPath = new Path("/user/hadoop/output/part-r-00000");
+        Path fromPath = new Path("/user/hadoop/histos/part-r-00000");
         Path toPath = new Path("/user/hadoop/histos/corpusHisto");
 
         // renaming to corpusHisto
@@ -109,8 +109,9 @@ public class WordCount
             System.out.println("Not Renamed!");
         }
 
-        hdfs.delete(new Path("/user/hadoop/output"), true);
+//      hdfs.delete(new Path("/user/hadoop/output"), true);
 
+        conf = new Configuration(); // Seems like it needs a new configuration object
         job = new Job(conf, "DSHistos");
         job.setJarByClass(WordCount.class);
         job.setMapperClass(HistogramsMapper.class);
