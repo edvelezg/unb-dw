@@ -12,6 +12,3 @@ else
     javac -classpath ../hadoop-0.20.2-core.jar -d classes WordCount.java
     jar -cvf "$curpath/wordcount.jar" -C classes/ .
 fi
-
-
-
