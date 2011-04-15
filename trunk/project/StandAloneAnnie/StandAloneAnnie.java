@@ -110,9 +110,21 @@ class StandAloneAnnie
         while (iter.hasNext())
         {
             Document doc = (Document) iter.next();
+            
+            // Remove 'paragraph' annotations
+            AnnotationSet originalAnnotSet = doc.getAnnotations("Original markups");
+            System.out.println("Size of original: "+ originalAnnotSet.size());
+            originalAnnotSet.clear();
+            
             AnnotationSet defaultAnnotSet = doc.getAnnotations();
+            System.out.println("Size of defaultAnnotSet: "+ defaultAnnotSet.size());
+            
             Set annotTypesRequired = new HashSet();
-            annotTypesRequired.add("Person");
+            // defaultAnnotSet.remove(new Annotation("paragraph"));
+            // annotTypesRequired.remove("paragraph");
+            annotTypesRequired.add("Sentence");
+            
+            // annotTypesRequired.add("Person");
             annotTypesRequired.add("Location");
             Set<Annotation> peopleAndPlaces =
             new HashSet<Annotation>(defaultAnnotSet.get(annotTypesRequired));
@@ -124,7 +136,7 @@ class StandAloneAnnie
                                      features.get(GateConstants.DOCUMENT_REPOSITIONING_INFO_FEATURE_NAME);
 
             ++count;
-            File file = new File("StANNIE_" + count + ".HTML");
+            File file = new File(count + ".xml");
             Out.prln("File name: '"+file.getAbsolutePath()+"'");
             if (originalContent != null && info != null)
             {
@@ -220,7 +232,7 @@ class StandAloneAnnie
             }
 
             String xmlDocument = doc.toXml(peopleAndPlaces, false);
-            String fileName = new String("StANNIE_toXML_" + count + ".HTML");
+            String fileName = new String("file" + count + ".xml");
             FileWriter writer = new FileWriter(fileName);
             writer.write(xmlDocument);
             writer.close();
