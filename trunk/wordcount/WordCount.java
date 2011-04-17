@@ -2,6 +2,7 @@ package org.myorg;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
+import java.lang.Math;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
@@ -51,7 +52,7 @@ public class WordCount
             StringTokenizer itr = new StringTokenizer(value.toString());
             while (itr.hasMoreTokens())
             {
-                word.set(itr.nextToken().length() + "");
+                word.set("" + itr.nextToken().length());
                 context.write(word, one);
             }
         }
@@ -91,6 +92,40 @@ public class WordCount
         }
     }
 
+    public static class Mapper4 
+    extends Mapper<Object, Text, Text, IntWritable>
+    {
+
+        // private static IntWritable one = new IntWritable(0);
+        private Text word = new Text();
+
+        public void map(Object key, Text value, Context context
+                       ) throws IOException, InterruptedException {
+	
+			String line = value.toString();
+			System.out.println(line + "\n");
+			String delimiter = "\t";
+			String[] parts;
+ 			parts = line.split(delimiter);
+
+			String filename = ((FileSplit) context.getInputSplit()).getPath().getName();
+			
+			
+			if (filename.equals("corpusHisto")) {
+				word.set(filename + "--" + "corpus");
+				context.write(word, new IntWritable(Integer.parseInt(parts[1])));
+			}
+			else
+			{
+				String[] temp;
+				temp = parts[0].split("--"); // removing wordlength, temp[0] is filename
+				word.set(filename + "--" + temp[0]);
+				context.write(word, new IntWritable(Integer.parseInt(parts[1])));						
+			}
+
+        }
+    }
+
     public static class IntSumReducer 
     extends Reducer<Text,IntWritable,Text,IntWritable>
     {
@@ -106,6 +141,42 @@ public class WordCount
             }
             result.set(sum);
             context.write(key, result);
+        }
+    }
+
+    public static class IntSumReducer2 
+    extends Reducer<Text,IntWritable,Text,IntWritable>
+    {
+        private IntWritable result = new IntWritable();
+
+        public void reduce(Text key, Iterable<IntWritable> values, 
+                           Context context
+                          ) throws IOException, InterruptedException {
+
+            int sum = 0;
+			String keyStr = key.toString();
+			String fourChars = keyStr.substring(0, Math.min(keyStr.length(), 4));
+			
+			if (fourChars.equals("Dots")) 
+			{
+				System.out.println("HasHitDots");
+				
+				for (IntWritable val : values)
+	            {
+	                sum += val.get();
+	            }
+	            result.set(sum);
+	            context.write(key, result);
+			}
+			else
+			{
+				for (IntWritable val : values)
+	            {
+	                sum += Math.pow(val.get(), 2);
+	            }
+	            result.set(sum);
+	            context.write(key, result);
+			}
         }
     }
 
@@ -133,8 +204,9 @@ public class WordCount
     }
 
     public static void main(String[] args) throws Exception {
-        Configuration conf;
+        Configuration conf = new Configuration(); 
         Job job;
+		boolean isRenamed;
 
         // String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
         // if (otherArgs.length != 2) {
@@ -142,64 +214,119 @@ public class WordCount
         //   System.exit(2);
         // }
 /*
-// Run job 1
-		conf = new Configuration();
-        job = new Job(conf, "CorpusHisto");
-        job.setJarByClass(WordCount.class);
-        job.setMapperClass(CorpusHistogramMapper.class);
-        job.setCombinerClass(IntSumReducer.class);
-        job.setReducerClass(IntSumReducer.class);
-        job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
-		// job.setInputFormatClass(FileInputFormat.class);
-		// job.setOutputFormatClass(FileOutputFormat.class);		
-        FileInputFormat.addInputPath(job, new Path(args[0]));
-        FileOutputFormat.setOutputPath(job, new Path("/user/hadoop/histos"));
-        job.waitForCompletion(true);
+		// CorpusHistogram: Run job 1
+				conf = new Configuration();
+		        job = new Job(conf, "CorpusHisto");
+		        job.setJarByClass(WordCount.class);
+		        job.setMapperClass(CorpusHistogramMapper.class);
+		        job.setCombinerClass(IntSumReducer.class);
+		        job.setReducerClass(IntSumReducer.class);
+		        job.setOutputKeyClass(Text.class);
+		        job.setOutputValueClass(IntWritable.class);
+				// job.setInputFormatClass(FileInputFormat.class);
+				// job.setOutputFormatClass(FileOutputFormat.class);		
+		        FileInputFormat.addInputPath(job, new Path(args[0]));
+		        FileOutputFormat.setOutputPath(job, new Path("/user/hadoop/histos"));
+		        job.waitForCompletion(true);
 
-// Rename the file
-        FileSystem hdfs = FileSystem.get(conf);
-        Path fromPath = new Path("/user/hadoop/histos/part-r-00000");
-        Path toPath = new Path("/user/hadoop/histos/corpusHisto");
+		// Rename the file
+		        FileSystem hdfs = FileSystem.get(conf);
+		        Path fromPath = new Path("/user/hadoop/histos/part-r-00000");
+		        Path toPath = new Path("/user/hadoop/histos/corpusHisto");
 
-        // renaming to corpusHisto
-        boolean isRenamed = hdfs.rename(fromPath, toPath);
-        if (isRenamed)
-        {
-            System.out.println("Renamed to /user/hadoop/histos/corpusHisto!");
-        }
-        else
-        {
-            System.out.println("Not Renamed!");
-        }
+		        // renaming to corpusHisto
+		        isRenamed = hdfs.rename(fromPath, toPath);
+		        if (isRenamed)
+		        {
+		            System.out.println("Renamed to /user/hadoop/histos/corpusHisto!");
+		        }
+		        else
+		        {
+		            System.out.println("Not Renamed!");
+		        }
 
-// Run job 2
-		conf = new Configuration(); // Seems like it needs a new configuration object
-        job = new Job(conf, "DSHistos");
-        job.setJarByClass(WordCount.class);
-        job.setMapperClass(HistogramsMapper.class);
-        job.setCombinerClass(IntSumReducer.class);
-        job.setReducerClass(IntSumReducer.class);
-        job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
-        FileInputFormat.addInputPath(job, new Path(args[0]));
-        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+		// FileHistograms: Run job 2
+				conf = new Configuration(); // Seems like it needs a new configuration object
+		        job = new Job(conf, "DSHistos");
+		        job.setJarByClass(WordCount.class);
+		        job.setMapperClass(HistogramsMapper.class);
+		        job.setCombinerClass(IntSumReducer.class);
+		        job.setReducerClass(IntSumReducer.class);
+		        job.setOutputKeyClass(Text.class);
+		        job.setOutputValueClass(IntWritable.class);
+		        FileInputFormat.addInputPath(job, new Path(args[0]));
+		        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+				job.waitForCompletion(true);
+
+		// PreDotProcuct: Run job 3
+		        conf = new Configuration(); // Seems like it needs a new configuration object
+		        job = new Job(conf, "Mapper3");
+		        job.setJarByClass(WordCount.class);
+		        job.setMapperClass(Mapper3.class);
+		        // job.setCombinerClass(MultReducer.class);
+		        job.setReducerClass(MultReducer.class);
+		        job.setOutputKeyClass(Text.class);
+		        job.setOutputValueClass(IntWritable.class);
+
+				FileInputFormat.addInputPaths(job, new String("/user/hadoop/output,/user/hadoop/histos"));
+		        // FileInputFormat.addInputPath(job, new Path("/user/hadoop/histos/"), new Path("/user/hadoop/output"));
+		        FileOutputFormat.setOutputPath(job, new Path("/user/hadoop/mapper3"));
+				job.waitForCompletion(true);
+
+		// Rename the files
+	        hdfs = FileSystem.get(conf);
+	        fromPath = new Path("/user/hadoop/output/part-r-00000");
+	        toPath = new Path("/user/hadoop/output/Histos");
+
+	    // renaming to Histos
+	    isRenamed = hdfs.rename(fromPath, toPath);
+	    if (isRenamed)
+	    {
+	        System.out.println("Renamed to /user/hadoop/output/Histos!");
+	    }
+	    else
+	    {
+	        System.out.println("Not Renamed!");
+	    }
+        
+	    // renaming to Dots
+	        fromPath = new Path("/user/hadoop/mapper3/part-r-00000");
+	        toPath = new Path("/user/hadoop/mapper3/Dots");
+
+	        // renaming to Histos
+	        isRenamed = hdfs.rename(fromPath, toPath);
+	        if (isRenamed)
+	        {
+	            System.out.println("Renamed to /user/hadoop/mapper3/Dots!");
+	        }
+	        else
+	        {
+	            System.out.println("Not Renamed!");
+	        }
 */
+		// Sum all the crap obtained: Run job 4
+	
+	        conf = new Configuration(); // Seems like it needs a new configuration object
+	        job = new Job(conf, "Mapper4");
+	        job.setJarByClass(WordCount.class);
+	        job.setMapperClass(Mapper4.class);
+	        job.setReducerClass(IntSumReducer2.class);
+	        job.setOutputKeyClass(Text.class);
+	        job.setOutputValueClass(IntWritable.class);
 
-// Run job 3
-        conf = new Configuration(); // Seems like it needs a new configuration object
-        job = new Job(conf, "Mapper3");
-        job.setJarByClass(WordCount.class);
-        job.setMapperClass(Mapper3.class);
-        // job.setCombinerClass(MultReducer.class);
-        job.setReducerClass(MultReducer.class);
-        job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
+			FileInputFormat.addInputPaths(job, new String("/user/hadoop/mapper3,/user/hadoop/output,/user/hadoop/histos"));
+	        // FileInputFormat.addInputPath(job, new Path("/user/hadoop/histos/"), new Path("/user/hadoop/output"));
+	        FileOutputFormat.setOutputPath(job, new Path("/user/hadoop/mapper4"));
+			// job.waitForCompletion(true);
 
-		FileInputFormat.addInputPaths(job, new String("/user/hadoop/output,/user/hadoop/histos"));
-        // FileInputFormat.addInputPath(job, new Path("/user/hadoop/histos/"), new Path("/user/hadoop/output"));
-        FileOutputFormat.setOutputPath(job, new Path("/user/hadoop/mapper3"));
 
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 }
+
+// Dots--file1.txt	24
+// Dots--file2.txt	19
+// Histos--file1.txt	8
+// Histos--file2.txt	7
+// corpusHisto--corpus	15
+// cat: Source must be a file.
