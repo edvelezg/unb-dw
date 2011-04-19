@@ -7,6 +7,7 @@ import java.lang.Math;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapreduce.*;
@@ -126,7 +127,43 @@ public class WordCount
         }
     }
 
-    public static class IntSumReducer 
+    public static class Mapper5 
+    extends Mapper<Object, Text, Text, Text>
+    {
+        private Text keyval = new Text();
+        private Text word = new Text();
+
+        public void map(Object key, Text value, Context context
+                       ) throws IOException, InterruptedException {
+	
+			String line = value.toString();
+            String[] elements = line.split("\t");
+            String[] hdr = elements[0].split("--");
+
+            if (hdr[0].equals("corpusHisto"))
+            {
+				word.set("file1.txt");
+				keyval.set(hdr[0] + "--" + elements[1]);
+				context.write(word, keyval);
+				word.set("file2.txt");
+				keyval.set(hdr[0] + "--" + elements[1]);
+				context.write(word, keyval);
+
+                System.out.println("file1.txt" + "\t" + hdr[0] + "--" + elements[1]);
+                System.out.println("file2.txt" + "\t" + hdr[0] + "--" + elements[1]);
+            }
+            else
+            {
+				word.set(hdr[1]);
+				keyval.set(hdr[0] + "--" + elements[1]);
+				
+				System.out.println(hdr[1] + "\t" + hdr[0] + "--" + elements[1]);
+                context.write(word, keyval);
+            }
+        }
+    }
+
+    public static class IntSumReducer
     extends Reducer<Text,IntWritable,Text,IntWritable>
     {
         private IntWritable result = new IntWritable();
@@ -140,6 +177,51 @@ public class WordCount
                 sum += val.get();
             }
             result.set(sum);
+            context.write(key, result);
+        }
+    }
+
+    public static class IntSumReducer3 
+    extends Reducer<Text,Text,Text,FloatWritable>
+    {
+        private FloatWritable result = new FloatWritable();
+
+        public void reduce(Text key, Iterable<Text> values, 
+                           Context context
+                          ) throws IOException, InterruptedException {
+	
+	        float[] order = new float[]{0.0f,0.0f,0.0f};
+	
+            for (Text val : values)
+            {
+				String valStr = val.toString();
+				String[] pair = valStr.split("--");
+
+			    if (pair[0].equals("Dots"))
+			    {
+			        order[0] = Float.parseFloat(pair[1]);
+			    }
+			    else if(pair[0].equals("Histos"))
+			    {
+			        order[1] = Float.parseFloat(pair[1]);
+			    }
+			    else if(pair[0].equals("corpusHisto"))
+			    {
+			        order[2] = Float.parseFloat(pair[1]);
+			    }
+			    else
+			    {
+			        System.out.println("Something evil happened");
+			    }				
+            }
+
+	        // String resStr = String.valueOf(res/(sqrt1*sqrt2));
+
+			float sqrt1 = (float) Math.sqrt(order[1]);
+	        float sqrt2 = (float) Math.sqrt(order[2]);
+	        float res = (float) order[0]/(sqrt1*sqrt2);
+
+            result.set(res);
             context.write(key, result);
         }
     }
@@ -303,7 +385,7 @@ public class WordCount
 	        {
 	            System.out.println("Not Renamed!");
 	        }
-*/
+
 		// Sum all the crap obtained: Run job 4
 	
 	        conf = new Configuration(); // Seems like it needs a new configuration object
@@ -317,8 +399,24 @@ public class WordCount
 			FileInputFormat.addInputPaths(job, new String("/user/hadoop/mapper3,/user/hadoop/output,/user/hadoop/histos"));
 	        // FileInputFormat.addInputPath(job, new Path("/user/hadoop/histos/"), new Path("/user/hadoop/output"));
 	        FileOutputFormat.setOutputPath(job, new Path("/user/hadoop/mapper4"));
-			// job.waitForCompletion(true);
+			job.waitForCompletion(true);
 
+*/
+
+		// Final job at last.
+	        conf = new Configuration(); // Seems like it needs a new configuration object
+	        job = new Job(conf, "Mapper5");
+	        job.setJarByClass(WordCount.class);
+	        job.setMapperClass(Mapper5.class);
+	        job.setReducerClass(IntSumReducer3.class);
+	        job.setOutputKeyClass(Text.class);
+	        job.setOutputValueClass(Text.class);
+
+			FileInputFormat.addInputPaths(job, new String("/user/hadoop/mapper4"));
+	        // FileInputFormat.addInputPath(job, new Path("/user/hadoop/histos/"), new Path("/user/hadoop/output"));
+	        FileOutputFormat.setOutputPath(job, new Path("/user/hadoop/mapper5"));
+			// job.waitForCompletion(true);
+		
 
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
