@@ -21,7 +21,7 @@ import org.apache.hadoop.util.GenericOptionsParser;
 
 public class WordCount
 {
-
+	public static final int NUM_FILES = 5;
     public static class HistogramsMapper 
     extends Mapper<Object, Text, Text, IntWritable>
     {
@@ -80,10 +80,13 @@ public class WordCount
 			// if the name of the file is corpus then emit 5 versions of the file			
 			one = new IntWritable(Integer.parseInt(temp[1]));
 			if (str.equals("corpusHisto")) {
-				word.set("file1.txt--" + temp[0]);
-				context.write(word, one);
-				word.set("file2.txt--" + temp[0]);
-				context.write(word, one);				
+				
+				for (int k = 0; k < NUM_FILES; ++k) {
+					word.set("file" + k + ".txt--" + temp[0]);
+					context.write(word, one);
+				}
+				// word.set("file2.txt--" + temp[0]);
+				// context.write(word, one);				
 			}
 			else
 			{
@@ -142,15 +145,20 @@ public class WordCount
 
             if (hdr[0].equals("corpusHisto"))
             {
-				word.set("file1.txt");
-				keyval.set(hdr[0] + "--" + elements[1]);
-				context.write(word, keyval);
-				word.set("file2.txt");
-				keyval.set(hdr[0] + "--" + elements[1]);
-				context.write(word, keyval);
+				for (int k = 0; k < NUM_FILES; ++k) {
+					word.set("file" + k + ".txt");
+					keyval.set(hdr[0] + "--" + elements[1]);
+					context.write(word, keyval);
 
-                System.out.println("file1.txt" + "\t" + hdr[0] + "--" + elements[1]);
-                System.out.println("file2.txt" + "\t" + hdr[0] + "--" + elements[1]);
+	                System.out.println("file" + k + ".txt" + "\t" + hdr[0] + "--" + elements[1]);
+				}
+				
+				// word.set("file2.txt");
+				// keyval.set(hdr[0] + "--" + elements[1]);
+				// context.write(word, keyval);
+
+                // System.out.println("file1.txt" + "\t" + hdr[0] + "--" + elements[1]);
+                // System.out.println("file2.txt" + "\t" + hdr[0] + "--" + elements[1]);
             }
             else
             {
@@ -295,7 +303,7 @@ public class WordCount
         //   System.err.println("Usage: wordcount <in> <out>");
         //   System.exit(2);
         // }
-/*
+
 		// CorpusHistogram: Run job 1
 				conf = new Configuration();
 		        job = new Job(conf, "CorpusHisto");
@@ -361,15 +369,15 @@ public class WordCount
 	        toPath = new Path("/user/hadoop/output/Histos");
 
 	    // renaming to Histos
-	    isRenamed = hdfs.rename(fromPath, toPath);
-	    if (isRenamed)
-	    {
-	        System.out.println("Renamed to /user/hadoop/output/Histos!");
-	    }
-	    else
-	    {
-	        System.out.println("Not Renamed!");
-	    }
+		    isRenamed = hdfs.rename(fromPath, toPath);
+		    if (isRenamed)
+		    {
+		        System.out.println("Renamed to /user/hadoop/output/Histos!");
+		    }
+		    else
+		    {
+		        System.out.println("Not Renamed!");
+		    }
         
 	    // renaming to Dots
 	        fromPath = new Path("/user/hadoop/mapper3/part-r-00000");
@@ -401,7 +409,6 @@ public class WordCount
 	        FileOutputFormat.setOutputPath(job, new Path("/user/hadoop/mapper4"));
 			job.waitForCompletion(true);
 
-*/
 
 		// Final job at last.
 	        conf = new Configuration(); // Seems like it needs a new configuration object
