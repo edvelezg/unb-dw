@@ -1,0 +1,12 @@
+Hello this is a test file for ANNIE.  I went to Halifax last week.  I live 
+in St John, and I am studying at the University of New Brunswick.  I also 
+have a supervisor whose name is Daniel in Montreal.  My supervisor's name 
+in St John is Owen.  
+
+Hello this is the second paragraph of this test.  I went to Halifax last 
+week.  I live in St John, and I am studying at the University of New 
+Brunswick.  I also have a supervisor whose name is Daniel in Montreal.  My 
+supervisor's name in St John is Owen.
+
+file:///C:/Users/UNBSJ/unb-dw/project/StandAloneAnnie/testfile.txt
+
