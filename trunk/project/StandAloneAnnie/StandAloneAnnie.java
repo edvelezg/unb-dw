@@ -1,3 +1,4 @@
+// file:///C:/Users/UNBSJ/unb-dw/project/StandAloneAnnie/testfile.txt
 import java.util.*;
 import java.io.*;
 import java.net.*;
@@ -139,6 +140,7 @@ class StandAloneAnnie {
 
             File file = new File(fileNameWithoutExtn + ".html");
             Out.prln("File name: '"+file.getAbsolutePath()+"'");
+
             if (originalContent != null && info != null) {
                 Out.prln("OrigContent and reposInfo existing. Generate file...");
 
@@ -175,6 +177,10 @@ class StandAloneAnnie {
                         editableContent.insert((int)insertPositionStart, startTagPart_1);
                     } // if
                 } // for
+                
+
+                editableContent.insert(0, "<root>\n");
+                editableContent.append("\n<\\root>");
 
                 FileWriter writer = new FileWriter(file);
                 writer.write(editableContent.toString());
@@ -215,6 +221,10 @@ class StandAloneAnnie {
                     } // if
                 } // for
 
+
+                editableContent.insert(0, "<root>\n");
+                editableContent.append("\n<\\root>");
+
                 FileWriter writer = new FileWriter(file);
                 writer.write(editableContent.toString());
                 writer.close();
@@ -223,11 +233,13 @@ class StandAloneAnnie {
                 Out.prln("Repositioning: "+info);
             }
 
-            Out.prln("Custom Lable: '"+file.getAbsolutePath()+"'");
-            String xmlDocument = doc.toXml(peopleAndPlaces, false);
+            StringBuffer xmlDocument = new StringBuffer(doc.toXml(peopleAndPlaces, false));
+
+            xmlDocument.insert(0, "<Root>\n");
+            xmlDocument.append("</Root>");
 
             FileWriter writer = new FileWriter(fileNameWithoutExtn + ".xml");
-            writer.write(xmlDocument);
+            writer.write(xmlDocument.toString());
             writer.close();
 
             // do something usefull with the XML here!
