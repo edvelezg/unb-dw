@@ -78,7 +78,7 @@ public class WordCount
             String str = ((FileSplit) context.getInputSplit()).getPath().getName();
 
             // if the name of the file is corpus then emit 5 versions of the file			
-            one = new DoubleWritable(Double.parseDouble((temp[1]));
+            one = new DoubleWritable(Double.parseDouble((temp[1])));
             if (str.equals("corpusHisto"))
             {
 
