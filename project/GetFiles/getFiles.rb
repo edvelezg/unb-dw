@@ -17,7 +17,10 @@ html = File.read("../gutenberg-1.html")
 
 doc = Nokogiri::HTML(html)
 arr = doc.search('a').select { |e| e['href'][/\.txt$/] }.map { |e| e['href'] }
-arr.each { |e| puts e }
+
+
+puts arr.length
+# arr.each { |e| puts e }
 
 # puts `ssh edvelez@master.licef.ca 'cd unb-dw/project/Books; wget #{arr[0]}'`
 # puts "wget #{arr[0]}"
