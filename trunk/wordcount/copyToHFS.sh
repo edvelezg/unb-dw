@@ -12,21 +12,17 @@ function getAndCopy () {
 # getAndCopy "http://www.gutenberg.ca/ebooks/hofland-affectionatebrothers/hofland-affectionatebrothers-00-t.txt" "input/file4.data"
 
 cd input
-sed -n '500,510p' < file0.data > file0.txt
-sed -n '500,510p' < file1.data > file1.txt
-sed -n '500,510p' < file2.data > file2.txt
-sed -n '100,110p' < file3.data > file3.txt
-sed -n '500,510p' < file4.data > file4.txt
-
-cat file0.txt
-echo "=================================================="
-cat file1.txt                                           
-echo "=================================================="
-cat file2.txt                                           
-echo "=================================================="
-cat file3.txt                                           
-echo "=================================================="
-cat file4.txt
+    #sed -n '500,510p' < file0.data > file0.txt
+    #sed -n '500,510p' < file1.data > file1.txt
+    #sed -n '500,510p' < file2.data > file2.txt
+    #sed -n '100,110p' < file3.data > file3.txt
+    #sed -n '500,510p' < file4.data > file4.txt
+    
+    cp file0.data file0.txt
+    cp file1.data file1.txt
+    cp file2.data file2.txt
+    cp file3.data file3.txt
+    cp file4.data file4.txt
 cd -
 
 ../bin/hadoop dfs -rm input/file0.txt
