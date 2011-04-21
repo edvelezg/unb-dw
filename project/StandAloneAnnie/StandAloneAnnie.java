@@ -7,8 +7,7 @@ import gate.creole.*;
 import gate.util.*;
 import gate.corpora.RepositioningInfo;
 
-class StandAloneAnnie
-{
+class StandAloneAnnie {
     /** The Corpus Pipeline application to contain ANNIE */
     private SerialAnalyserController annieController;
 
@@ -28,8 +27,7 @@ class StandAloneAnnie
                                                          );
 
         // load each PR as defined in ANNIEConstants
-        for (int i = 0; i < ANNIEConstants.PR_NAMES.length; i++)
-        {
+        for (int i = 0; i < ANNIEConstants.PR_NAMES.length; i++) {
             FeatureMap params = Factory.newFeatureMap(); // use default parameters
             ProcessingResource pr = (ProcessingResource)
                                     Factory.createResource(ANNIEConstants.PR_NAMES[i], params);
@@ -42,8 +40,7 @@ class StandAloneAnnie
     } // initAnnie()
 
     /** Tell ANNIE's controller about the corpus you want to run on */
-    public void setCorpus(Corpus corpus)
-    {
+    public void setCorpus(Corpus corpus) {
         annieController.setCorpus(corpus);
     } // setCorpus
 
@@ -81,8 +78,7 @@ class StandAloneAnnie
         // create a GATE corpus and add a document for each command-line
         // argument
         Corpus corpus = (Corpus) Factory.createResource("gate.corpora.CorpusImpl");
-        for (int i = 0; i < args.length; i++)
-        {
+        for (int i = 0; i < args.length; i++) {
             URL u = new URL(args[i]);
             FeatureMap params = Factory.newFeatureMap();
             params.put("sourceUrl", u);
@@ -107,23 +103,22 @@ class StandAloneAnnie
         String startTagPart_3 = "\" style=\"background:Red;\">";
         String endTag = "</span>";
 
-        while (iter.hasNext())
-        {
+        while (iter.hasNext()) {
             Document doc = (Document) iter.next();
-            
+
             // Remove 'paragraph' annotations
             AnnotationSet originalAnnotSet = doc.getAnnotations("Original markups");
             System.out.println("Size of original: "+ originalAnnotSet.size());
             originalAnnotSet.clear();
-            
+
             AnnotationSet defaultAnnotSet = doc.getAnnotations();
             System.out.println("Size of defaultAnnotSet: "+ defaultAnnotSet.size());
-            
+
             Set annotTypesRequired = new HashSet();
             // defaultAnnotSet.remove(new Annotation("paragraph"));
             // annotTypesRequired.remove("paragraph");
             annotTypesRequired.add("Sentence");
-            
+
             // annotTypesRequired.add("Person");
             annotTypesRequired.add("Location");
             Set<Annotation> peopleAndPlaces =
@@ -136,18 +131,22 @@ class StandAloneAnnie
                                      features.get(GateConstants.DOCUMENT_REPOSITIONING_INFO_FEATURE_NAME);
 
             ++count;
-            File file = new File(count + ".xml");
+
+            String url = doc.getSourceUrl().toString();
+            String fileName = url.substring( url.lastIndexOf('/')+1, url.length() );
+            String fileNameWithoutExtn = fileName.substring(0, fileName.lastIndexOf('.'));
+
+
+            File file = new File(fileNameWithoutExtn + ".html");
             Out.prln("File name: '"+file.getAbsolutePath()+"'");
-            if (originalContent != null && info != null)
-            {
+            if (originalContent != null && info != null) {
                 Out.prln("OrigContent and reposInfo existing. Generate file...");
 
                 Iterator it = peopleAndPlaces.iterator();
                 Annotation currAnnot;
                 SortedAnnotationList sortedAnnotations = new SortedAnnotationList();
 
-                while (it.hasNext())
-                {
+                while (it.hasNext()) {
                     currAnnot = (Annotation) it.next();
                     sortedAnnotations.addSortedExclusive(currAnnot);
                 } // while
@@ -158,16 +157,14 @@ class StandAloneAnnie
                 // insert anotation tags backward
                 Out.prln("Unsorted annotations count: "+peopleAndPlaces.size());
                 Out.prln("Sorted annotations count: "+sortedAnnotations.size());
-                for (int i=sortedAnnotations.size()-1; i>=0; --i)
-                {
+                for (int i=sortedAnnotations.size()-1; i>=0; --i) {
                     currAnnot = (Annotation) sortedAnnotations.get(i);
                     insertPositionStart =
                     currAnnot.getStartNode().getOffset().longValue();
                     insertPositionStart = info.getOriginalPos(insertPositionStart);
                     insertPositionEnd = currAnnot.getEndNode().getOffset().longValue();
                     insertPositionEnd = info.getOriginalPos(insertPositionEnd, true);
-                    if (insertPositionEnd != -1 && insertPositionStart != -1)
-                    {
+                    if (insertPositionEnd != -1 && insertPositionStart != -1) {
                         editableContent.insert((int)insertPositionEnd, endTag);
                         editableContent.insert((int)insertPositionStart, startTagPart_3);
                         editableContent.insert((int)insertPositionStart,
@@ -183,16 +180,14 @@ class StandAloneAnnie
                 writer.write(editableContent.toString());
                 writer.close();
             } // if - should generate
-            else if (originalContent != null)
-            {
+            else if (originalContent != null) {
                 Out.prln("OrigContent existing. Generate file...");
 
                 Iterator it = peopleAndPlaces.iterator();
                 Annotation currAnnot;
                 SortedAnnotationList sortedAnnotations = new SortedAnnotationList();
 
-                while (it.hasNext())
-                {
+                while (it.hasNext()) {
                     currAnnot = (Annotation) it.next();
                     sortedAnnotations.addSortedExclusive(currAnnot);
                 } // while
@@ -203,14 +198,12 @@ class StandAloneAnnie
                 // insert anotation tags backward
                 Out.prln("Unsorted annotations count: "+peopleAndPlaces.size());
                 Out.prln("Sorted annotations count: "+sortedAnnotations.size());
-                for (int i=sortedAnnotations.size()-1; i>=0; --i)
-                {
+                for (int i=sortedAnnotations.size()-1; i>=0; --i) {
                     currAnnot = (Annotation) sortedAnnotations.get(i);
                     insertPositionStart =
                     currAnnot.getStartNode().getOffset().longValue();
                     insertPositionEnd = currAnnot.getEndNode().getOffset().longValue();
-                    if (insertPositionEnd != -1 && insertPositionStart != -1)
-                    {
+                    if (insertPositionEnd != -1 && insertPositionStart != -1) {
                         editableContent.insert((int)insertPositionEnd, endTag);
                         editableContent.insert((int)insertPositionStart, startTagPart_3);
                         editableContent.insert((int)insertPositionStart,
@@ -225,15 +218,15 @@ class StandAloneAnnie
                 FileWriter writer = new FileWriter(file);
                 writer.write(editableContent.toString());
                 writer.close();
-            } else
-            {
+            } else {
                 Out.prln("Content : "+originalContent);
                 Out.prln("Repositioning: "+info);
             }
 
+            Out.prln("Custom Lable: '"+file.getAbsolutePath()+"'");
             String xmlDocument = doc.toXml(peopleAndPlaces, false);
-            String fileName = new String("file" + count + ".xml");
-            FileWriter writer = new FileWriter(fileName);
+
+            FileWriter writer = new FileWriter(fileNameWithoutExtn + ".xml");
             writer.write(xmlDocument);
             writer.close();
 
@@ -245,23 +238,18 @@ class StandAloneAnnie
     /**
      *
      */
-    public static class SortedAnnotationList extends Vector
-    {
-        public SortedAnnotationList()
-        {
+    public static class SortedAnnotationList extends Vector {
+        public SortedAnnotationList() {
             super();
         } // SortedAnnotationList
 
-        public boolean addSortedExclusive(Annotation annot)
-        {
+        public boolean addSortedExclusive(Annotation annot) {
             Annotation currAnot = null;
 
             // overlapping check
-            for (int i=0; i<size(); ++i)
-            {
+            for (int i=0; i<size(); ++i) {
                 currAnot = (Annotation) get(i);
-                if (annot.overlaps(currAnot))
-                {
+                if (annot.overlaps(currAnot)) {
                     return false;
                 } // if
             } // for
@@ -269,12 +257,10 @@ class StandAloneAnnie
             long annotStart = annot.getStartNode().getOffset().longValue();
             long currStart;
             // insert
-            for (int i=0; i < size(); ++i)
-            {
+            for (int i=0; i < size(); ++i) {
                 currAnot = (Annotation) get(i);
                 currStart = currAnot.getStartNode().getOffset().longValue();
-                if (annotStart < currStart)
-                {
+                if (annotStart < currStart) {
                     insertElementAt(annot, i);
                     /*
                      Out.prln("Insert start: "+annotStart+" at position: "+i+" size="+size());
@@ -286,7 +272,7 @@ class StandAloneAnnie
 
             int size = size();
             insertElementAt(annot, size);
-//Out.prln("Insert start: "+annotStart+" at size position: "+size);
+            //Out.prln("Insert start: "+annotStart+" at size position: "+size);
             return true;
         } // addSorted
     } // SortedAnnotationList
