@@ -1,0 +1,16 @@
+
+Example input:  4 ABCDEFGH
+
+Example output: ABCD, EFGH     
+                ABC, DEF, FGH  
+                AB, CD, EF, GH 
+
+
+Example input:  6 IJKLMNOP
+
+Example output: IJKLMN, KLMNOP 
+                IJKLM, LMNOP   
+                IJKL, MNOP     
+                IJK, LMN, NOP  
+                IJ, KL, MN, OP 
+
