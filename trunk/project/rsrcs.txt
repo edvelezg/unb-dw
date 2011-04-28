@@ -1,0 +1,55 @@
+http://gate.ac.uk/wiki/code-repository/
+http://xmlandmore.blogspot.com/2011/03/how-to-create-standalone-application.html
+
+Important notes:
+
+Selections/Settings:
+
+    - MySQL server port: 3307
+    - HSQL server port: 9001
+    - BI Server (Tomcat) startup port: 8081
+    - BI Server shutdown port: 8012
+    - Enterprise Console port: 8088
+    - Data Integration Server port: 9080
+    - Embedded Database Port: 9092
+
+ - Reporting Design Tools:
+    - Report Designer
+    - Metadata Editor
+    - Design Studio
+
+ - Analysis Design Tools:
+    - Schema Workbench
+    - Aggregate Table Designer
+
+ - Dashboard Designer
+
+ - Data Integration (ETL)
+
+ - Analyzer
+
+ - Sample Content
+
+On question three: The email you contacted is correct.  I'll send to the 
+sales dept directly for you now.  Let me know if I can help further.  
+Regarding the users and passwords, the installer creates a few sets of 
+hardcoded username/password sets.  It is recommended that these be changed 
+to better passwords once you go to Production.  
+
+ 
+
+1) MySQL DB Credentials
+
+  a) root/password             - this is the MySQL root DB user
+
+  b) jasperdb/password    - this is the DB user used by JasperServer at runtime
+
+  c) (Database name used for the JasperServer repository:  jasperserver)
+
+ 
+
+2) JasperServer User Login Credentials
+
+  a) jasperadmin/jasperadmin      - default administrative user
+
+  b) joeuser/joeuser                         - default standard user (created if you choose to install Sample Data)
