@@ -5,11 +5,11 @@ function getAndCopy () {
 	mv "$(basename $1)" "$2"
 }
 
-# getAndCopy "http://www.gutenberg.ca/ebooks/alloway-crossedswords/alloway-crossedswords-00-t.txt"               "input/file0.data"
-# getAndCopy "http://www.gutenberg.ca/ebooks/murraywhh-storythekegtold/murraywhh-storythekegtold-00-t.txt"       "input/file1.data"
-# getAndCopy "http://www.gutenberg.ca/ebooks/service-pretender/service-pretender-00-t.txt"                       "input/file2.data"
-# getAndCopy "http://www.gutenberg.ca/ebooks/salec-specialist/salec-specialist-00-t.txt"                         "input/file3.data"
-# getAndCopy "http://www.gutenberg.ca/ebooks/hofland-affectionatebrothers/hofland-affectionatebrothers-00-t.txt" "input/file4.data"
+getAndCopy "http://www.gutenberg.ca/ebooks/alloway-crossedswords/alloway-crossedswords-00-t.txt"               "input/file0.data"
+getAndCopy "http://www.gutenberg.ca/ebooks/murraywhh-storythekegtold/murraywhh-storythekegtold-00-t.txt"       "input/file1.data"
+getAndCopy "http://www.gutenberg.ca/ebooks/service-pretender/service-pretender-00-t.txt"                       "input/file2.data"
+getAndCopy "http://www.gutenberg.ca/ebooks/salec-specialist/salec-specialist-00-t.txt"                         "input/file3.data"
+getAndCopy "http://www.gutenberg.ca/ebooks/hofland-affectionatebrothers/hofland-affectionatebrothers-00-t.txt" "input/file4.data"
 
 cd input
     #sed -n '500,510p' < file0.data > file0.txt
