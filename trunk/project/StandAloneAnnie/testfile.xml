@@ -1,0 +1,14 @@
+<Root>
+<Sentence>Hello this is a test file for ANNIE.</Sentence>  <Sentence>I went to Halifax last week.</Sentence>  <Sentence>I live 
+in <Location>St John</Location>, and I am studying at the University of New Brunswick.</Sentence>  <Sentence>I also 
+have a supervisor whose name is Daniel in <Location>Montreal</Location>.</Sentence>  <Sentence>My supervisor&apos;s name 
+in <Location>St John</Location> is Owen.</Sentence>  
+
+<Sentence>Hello this is the second paragraph of this test.</Sentence>  <Sentence>I went to Halifax last 
+week.</Sentence>  <Sentence>I live in <Location>St John</Location>, and I am studying at the University of New 
+Brunswick.</Sentence>  <Sentence>I also have a supervisor whose name is Daniel in <Location>Montreal</Location>.</Sentence>  <Sentence>My 
+supervisor&apos;s name in <Location>St John</Location> is Owen.</Sentence>
+
+<Sentence>file:///C:/Users/UNBSJ/unb-dw/project/StandAloneAnnie/testfile.txt</Sentence>
+
+</Root>
