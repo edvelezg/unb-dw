@@ -1,21 +1,21 @@
-DROP TABLE IF EXISTS place
+CREATE DATABASE sent_schema;
+
+DROP TABLE IF EXISTS place;
 CREATE TABLE place
          (
-           place_id     INT UNSIGNED,
-           place_name   VARCHAR(200),
-		   PRIMARY KEY (place_id)
+           place_id     INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+           place_name   VARCHAR(200)
          );
 CREATE UNIQUE INDEX idx_place_pk ON place
 (
     place_id
 );
 
-DROP TABLE IF EXISTS sentence
+DROP TABLE IF EXISTS sentence;
 CREATE TABLE sentence
           (
-            book_id      INT UNSIGNED,
-            sentence_id  INT UNSIGNED,
-			book_name    VARCHAR(5000)
+            sentence_id  BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            book_name    VARCHAR(5000),
             sentence     VARCHAR(5000)
           );
           
