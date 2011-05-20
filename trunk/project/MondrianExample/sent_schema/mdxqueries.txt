@@ -1,0 +1,28 @@
+
+===== MDX Query =====
+
+SELECT {[Location].[United States]} ON COLUMNS,
+  {[Product].[All Products]} ON ROWS
+FROM [Sales]
+WHERE [Measures].[Turnover]
+
+SELECT {
+     [Location].[All Locations].[United States]
+} ON COLUMNS
+FROM [Sales]
+WHERE [Measures].[Turnover]
+
+===== MySQL query =====
+
+SELECT t2.country, sum(turnover) 
+FROM facts_sales as t1 INNER JOIN dim_location as t2 
+ON t1.location_id = t2.location_id 
+WHERE t2.country = 'United States';
+
+SELECT t2.region, sum(turnover) 
+FROM facts_sales as t1 INNER JOIN dim_location as t2 
+ON t1.location_id = t2.location_id 
+WHERE t2.country = 'United States'
+GROUP BY t2.region;
+
+
