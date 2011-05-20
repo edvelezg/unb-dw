@@ -1,4 +1,12 @@
+
 CREATE DATABASE sent_schema;
+
+CREATE TABLE fact_sentence (
+  `id` bigint(20) DEFAULT NULL,
+  `place_id` bigint(20) DEFAULT NULL,
+  `sentence_id` bigint(20) DEFAULT NULL,
+  `frequency` bigint(20) DEFAULT NULL
+);
 
 DROP TABLE IF EXISTS place;
 CREATE TABLE place
@@ -13,30 +21,23 @@ CREATE UNIQUE INDEX idx_place_pk ON place
 
 DROP TABLE IF EXISTS sentence;
 CREATE TABLE sentence
-          (
-            sentence_id  BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            book_name    VARCHAR(5000),
-            sentence     VARCHAR(5000)
-          );
+(
+    sentence_id  BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    book_name    VARCHAR(5000),
+    sentence     VARCHAR(5000)
+);
           
-DROP TABLE IF EXISTS sentence_and_place
-CREATE TABLE sentence_facts
-           (
-             book_id     INT UNSIGNED,
-             sentence_id INT UNSIGNED,
-             place_id    INT UNSIGNED,
-             frequency   INT UNSIGNED
-           );
-           
-DROP TABLE IF EXISTS place
-CREATE TABLE place
-         (
-           place_id     INT UNSIGNED,
-           place_name   VARCHAR(200)
-         );
-         
-LOAD DATA LOCAL INFILE '/Users/Naix/Tmp/unb-dw/project/XMLtoRel/places.txt' INTO TABLE place
-LOAD DATA LOCAL INFILE '/Users/Naix/Tmp/unb-dw/project/XMLtoRel/sentences.txt' INTO TABLE sentence
-LOAD DATA LOCAL INFILE '/Users/Naix/Tmp/unb-dw/project/XMLtoRel/sentences_and_places.txt' INTO TABLE sentence_and_place
+-- DROP TABLE IF EXISTS sentence_and_place
+-- CREATE TABLE sentence_facts
+--            (
+--              book_id     INT UNSIGNED,
+--              sentence_id INT UNSIGNED,
+--              place_id    INT UNSIGNED,
+--              frequency   INT UNSIGNED
+--            );
+--                     
+-- LOAD DATA LOCAL INFILE '/Users/Naix/Tmp/unb-dw/project/XMLtoRel/places.txt' INTO TABLE place
+-- LOAD DATA LOCAL INFILE '/Users/Naix/Tmp/unb-dw/project/XMLtoRel/sentences.txt' INTO TABLE sentence
+-- LOAD DATA LOCAL INFILE '/Users/Naix/Tmp/unb-dw/project/XMLtoRel/sentences_and_places.txt' INTO TABLE sentence_and_place
 
 
