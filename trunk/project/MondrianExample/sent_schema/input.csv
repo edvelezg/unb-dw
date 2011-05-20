@@ -1,0 +1,11 @@
+book||sentence||place||frequency
+file1.xml||Halifax||I went to Halifax last week.||1
+file1.xml||St John||I live in St John, and I am studying at the University of New Brunswick, which is not in Halifax.||1
+file1.xml||Halifax||I live in St John, and I am studying at the University of New Brunswick, which is not in Halifax.||1
+file1.xml||Montreal||I also have a supervisor whose name is Daniel in Montreal.||1
+file1.xml||St John||My supervisor's name in St John is Owen.||1
+file2.xml||Medellín||I went to Medellín last week.||1
+file2.xml||St John||I live in St John, and I am studying at the University of New Brunswick, which is not in Fredericton.||1
+file2.xml||Fredericton||I live in St John, and I am studying at the University of New Brunswick, which is not in Fredericton.||1
+file2.xml||Montreal||I also have a supervisor whose name is Daniel in Montreal.||1
+file2.xml||London||My supervisor's name in London is Owen.||1
