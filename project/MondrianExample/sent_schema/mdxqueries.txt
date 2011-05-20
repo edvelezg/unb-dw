@@ -1,16 +1,11 @@
 
 ===== MDX Query =====
 
-SELECT {[Location].[United States]} ON COLUMNS,
-  {[Product].[All Products]} ON ROWS
-FROM [Sales]
-WHERE [Measures].[Turnover]
+SELECT {[Place].[All Places]} ON COLUMNS,
+  {[Sentence].[All Sentences]} ON ROWS
+FROM [Places]
+WHERE [Measures].[frequency]
 
-SELECT {
-     [Location].[All Locations].[United States]
-} ON COLUMNS
-FROM [Sales]
-WHERE [Measures].[Turnover]
 
 ===== MySQL query =====
 

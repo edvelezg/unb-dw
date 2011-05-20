@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
-<Schema name="ACMESchema">
-	<Cube name="Sales">
+<Schema name="SentenceSchema">
+	<Cube name="Places">
 		<Table name="fact_sentence"/>
 		<Dimension name="Sentence" foreignKey="sentence_id">
 			<Hierarchy hasAll="true" allMemberName="All Sentences" primaryKey="sentence_id">
 				<Table name="sentence"/>
 				<Level name="book" column="book_name" uniqueMembers="true"/>
-				<Level name="sentence" column="sentence" uniqueMembers="true"/>
+				<Level name="sentence" column="sentence_id" uniqueMembers="true"/>
 			</Hierarchy>
 		</Dimension>
 		<Dimension name="Place" foreignKey="place_id">
