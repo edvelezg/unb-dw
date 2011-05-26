@@ -41,3 +41,14 @@ CREATE TABLE sentence
 -- LOAD DATA LOCAL INFILE '/Users/Naix/Tmp/unb-dw/project/XMLtoRel/sentences_and_places.txt' INTO TABLE sentence_and_place
 
 
+CREATE TABLE `sentence` (
+  `sentence_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `book_name` varchar(5000) DEFAULT NULL,
+  `sentence` varchar(5000) DEFAULT NULL,
+  `year` varchar(20) DEFAULT NULL,
+  `author` varchar(30) DEFAULT NULL,
+  `filename` varchar(40) DEFAULT NULL,
+  `sentence_num` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`sentence_id`),
+  KEY `idx_sentence_lookup` (`filename`,`sentence_num`)
+) ENGINE=MyISAM AUTO_INCREMENT=4383 DEFAULT CHARSET=latin1
