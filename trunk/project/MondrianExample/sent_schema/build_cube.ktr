@@ -127,7 +127,7 @@
     <rownum>Y</rownum>
     <rownumByFile>N</rownumByFile>
     <rownum_field>id</rownum_field>
-    <format>DOS</format>
+    <format>mixed</format>
     <encoding>UTF-8</encoding>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <file>
@@ -143,7 +143,22 @@
     </filters>
     <fields>
       <field>
-        <name>book</name>
+        <name>year</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>15</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>author</name>
         <type>String</type>
         <format/>
         <currency>$</currency>
@@ -158,7 +173,7 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>place</name>
+        <name>book</name>
         <type>String</type>
         <format/>
         <currency>$</currency>
@@ -167,7 +182,37 @@
         <nullif>-</nullif>
         <ifnull/>
         <position>-1</position>
-        <length>11</length>
+        <length>32</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>fname</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>31</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>sentence_num</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>15</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
         <repeat>N</repeat>
@@ -182,7 +227,22 @@
         <nullif>-</nullif>
         <ifnull/>
         <position>-1</position>
-        <length>101</length>
+        <length>314</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>place</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>9</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
         <repeat>N</repeat>
@@ -292,8 +352,24 @@
       <crcfield>hashcode</crcfield>
       <fields>
         <key>
+          <name>year</name>
+          <lookup>year</lookup>
+        </key>
+        <key>
+          <name>author</name>
+          <lookup>author</lookup>
+        </key>
+        <key>
           <name>book</name>
           <lookup>book_name</lookup>
+        </key>
+        <key>
+          <name>fname</name>
+          <lookup>filename</lookup>
+        </key>
+        <key>
+          <name>sentence_num</name>
+          <lookup>sentence_num</lookup>
         </key>
         <key>
           <name>sentence</name>

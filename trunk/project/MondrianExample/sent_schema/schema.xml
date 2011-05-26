@@ -5,8 +5,10 @@
 		<Dimension name="Sentence" foreignKey="sentence_id">
 			<Hierarchy hasAll="true" allMemberName="All Sentences" primaryKey="sentence_id">
 				<Table name="sentence"/>
+				<Level name="author" column="author" uniqueMembers="true"/>
 				<Level name="book" column="book_name" uniqueMembers="true"/>
-				<Level name="sentence" column="sentence_id" uniqueMembers="true"/>
+				<Level name="Sentence Number" column="sentence_num" uniqueMembers="true"/>
+				<Level name="Sentence Text" column="sentence" uniqueMembers="true"/>
 			</Hierarchy>
 		</Dimension>
 		<Dimension name="Place" foreignKey="place_id">
