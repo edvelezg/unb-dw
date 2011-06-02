@@ -1,10 +1,63 @@
-
 ===== MDX Query =====
+
+Selecting tuples
+
+SELECT 
+([Place].[Houston]) ON ROWS,
+([Measures].[frequency]) ON COLUMNS 
+FROM [Places]
+
+Select only two places
+
+SELECT 
+{[Place].[Houston],[Place].[Canada]} ON ROWS,
+{[Measures].[frequency]} ON COLUMNS 
+FROM [Places]
+
+SELECT 
+{[Place].[Houston],[Place].[Canada]} ON ROWS,
+  {[Sentence].[All Sentences]} ON COLUMNS
+FROM [Places]
+
+pretty much select everything no matter if
+the place is null or not.
 
 SELECT {[Place].[All Places]} ON COLUMNS,
   {[Sentence].[All Sentences]} ON ROWS
 FROM [Places]
 WHERE [Measures].[frequency]
+
+
+SELECT 
+{[Place].[Houston],[Place].[Canada]} ON ROWS,
+{[Measures].[frequency]} ON COLUMNS 
+FROM [Places]
+
+
+Mentioning places found in certain sentences of a book
+
+SELECT NON EMPTY Hierarchize(
+   {[Sentence].[Euripides].[Rhesus [The Rhesus of Euripides]]].[2], 
+   [Sentence].[Euripides].[Rhesus [The Rhesus of Euripides]]].[4], 
+   [Sentence].[Euripides].[Rhesus [The Rhesus of Euripides]]].[5], 
+   [Sentence].[Euripides].[Rhesus [The Rhesus of Euripides]]].[7], 
+   [Sentence].[Euripides].[Rhesus [The Rhesus of Euripides]]].[9], 
+   [Sentence].[Euripides].[Rhesus [The Rhesus of Euripides]]].[11]}) ON COLUMNS, 
+NON EMPTY Except({[Place].[All Places].Children.Parent}, {[Place].[NULL]}) ON ROWS
+from [Places]
+
+
+Omitting a member:
+SELECT 
+   Except
+      ([Place].[All Places].Children ,
+         {[Place].[NULL]}
+      ) ON COLUMNS,
+   {[Sentence].[All Sentences]} ON ROWS
+FROM
+   [Places]
+WHERE
+   ([Measures].[frequency])
 
 
 ===== MySQL query =====

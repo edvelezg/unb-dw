@@ -6,7 +6,7 @@
 			<Hierarchy hasAll="true" allMemberName="All Sentences" primaryKey="sentence_id">
 				<Table name="sentence"/>
 				<Level name="author" column="author" uniqueMembers="true"/>
-				<Level name="book" column="filename" uniqueMembers="true"/>
+				<Level name="book" column="book_name" uniqueMembers="true"/>
 				<Level name="Sentence Number" column="sentence_num" uniqueMembers="false"/>
 				<Level name="Sentence Text" column="sentence" uniqueMembers="true"/>
 			</Hierarchy>
