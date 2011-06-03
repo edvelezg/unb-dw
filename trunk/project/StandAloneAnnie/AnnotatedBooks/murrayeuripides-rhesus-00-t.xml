@@ -1,37 +1,4 @@
 <Root>
-
-* <Sentence>A Project Gutenberg <Location>Canada</Location> Ebook *</Sentence>
-
-<Sentence>This ebook is made available at no cost and with very few
-restrictions.</Sentence> <Sentence>These restrictions apply only if (1) you make
-a change in the ebook (other than alteration for different
-display devices), or (2) you are making commercial use of
-the ebook.</Sentence> <Sentence>If either of these conditions applies, please
-check gutenberg.ca/links/licence.html before proceeding.</Sentence>
-
-<Sentence>This work is in the Canadian public domain, but may be
-under copyright in some countries.</Sentence> <Sentence>If you live outside <Location>Canada</Location>,
-check your country&apos;s copyright laws.</Sentence> <Sentence>IF THE BOOK IS UNDER
-COPYRIGHT IN YOUR COUNTRY, DO NOT DOWNLOAD
-OR REDISTRIBUTE THIS FILE.</Sentence>
-
-<Sentence>Title: Rhesus [The Rhesus of Euripides]
-Author: Euripides (ca.</Sentence> 480-406 <Sentence>B.C.)
-Translator: Murray, George Gilbert Aimé (1866-1957)
-Date of first publication [this translation]: 1913
-Date of first performance [original play]: ca.</Sentence> 450 <Sentence>B.C.?</Sentence>
-<Sentence>Edition used as base for this ebook:
-<Location>London</Location>: George Allen, 1913
-   [first edition]
-   [The Athenian <Location>Drama</Location> for English Readers]
-Date first posted: 9 February 2011
-Date last updated: 9 February 2011
-Project Gutenberg <Location>Canada</Location> ebook #719</Sentence>
-
-<Sentence>This ebook was produced by: Barbara Watson
-&amp; the Online Distributed Proofreading <Location>Canada</Location> Team
-at http://www.pgdpcanada.net</Sentence>
-
 <Sentence>This ebook was produced from images generously made
 available by the Internet Archive/University of Toronto
 - Mississauga</Sentence>
@@ -44,7 +11,8 @@ available by the Internet Archive/University of Toronto
                                  <Sentence>RHESUS</Sentence>
 
 
-
+<Sentence> I made up this sentence in <Location>Houston</Location> and I mention it again: <Location>Houston</Location> to test, I also mention
+another place like <Location>St. John</Location> to test further the effectiveness of my script </Sentence>
 
                            <Sentence>THE ATHENIAN <Location>DRAMA</Location>
                            FOR ENGLISH READERS</Sentence>
