@@ -167,7 +167,7 @@
         <nullif>-</nullif>
         <ifnull/>
         <position>-1</position>
-        <length>9</length>
+        <length>22</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
         <repeat>N</repeat>
@@ -182,7 +182,7 @@
         <nullif>-</nullif>
         <ifnull/>
         <position>-1</position>
-        <length>32</length>
+        <length>24</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
         <repeat>N</repeat>
@@ -197,7 +197,22 @@
         <nullif>-</nullif>
         <ifnull/>
         <position>-1</position>
-        <length>31</length>
+        <length>43</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>sentence_int</name>
+        <type>String</type>
+        <format/>
+        <currency>$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>5</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
         <repeat>N</repeat>
@@ -227,7 +242,7 @@
         <nullif>-</nullif>
         <ifnull/>
         <position>-1</position>
-        <length>314</length>
+        <length>149</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
         <repeat>N</repeat>
@@ -242,7 +257,7 @@
         <nullif>-</nullif>
         <ifnull/>
         <position>-1</position>
-        <length>9</length>
+        <length>7</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
         <repeat>N</repeat>
@@ -374,6 +389,10 @@
         <key>
           <name>sentence</name>
           <lookup>sentence</lookup>
+        </key>
+        <key>
+          <name>sentence_int</name>
+          <lookup>sentence_int</lookup>
         </key>
         <return>
           <name>sentence_id</name>
