@@ -1,3 +1,4 @@
+ALTER TABLE sentence ADD fname VARCHAR(50);
 
 CREATE DATABASE sent_schema;
 
