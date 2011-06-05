@@ -19,5 +19,6 @@
 			</Hierarchy>
 		</Dimension>
 		<Measure name="frequency" column="frequency" aggregator="count" formatString="Standard"/>
+		<Measure name="total" column="total" aggregator="sum" formatString="Standard"/>
 	</Cube>
 </Schema>
