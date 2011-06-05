@@ -1,5 +1,16 @@
 ===== MDX Query =====
 
+-- Selecting the top 10 places mentioned -- 
+WITH SET TopPlaces AS 
+'TopCount( Except({[Place].[All Places].Children}, {[Place].[NONE]}), 10, [Measures].[frequency] )'
+
+SELECT NON EMPTY Hierarchize(
+   {[Sentence].[All Sentences]}) ON COLUMNS, 
+TopPlaces ON ROWS
+from [Places]
+where [Measures].[frequency]
+
+
 Selecting tuples
 
 SELECT 
