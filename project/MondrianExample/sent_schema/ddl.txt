@@ -1,4 +1,8 @@
-ALTER TABLE sentence ADD fname VARCHAR(50);
+ALTER TABLE sentence ADD filename VARCHAR(50);
+
+ALTER TABLE sentence MODIFY sentence_int VARCHAR(20);
+
+ALTER TABLE sentence DROP filename;
 
 CREATE DATABASE sent_schema;
 
