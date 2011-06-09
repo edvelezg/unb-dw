@@ -1,22 +1,47 @@
+    SELECT NON EMPTY Except(
+       {[Location].[All Places].Children}, 
+       {[Location].[China]}
+    ) ON COLUMNS,
+      {[Product].[All Products].[Bottled Water].Children} ON ROWS
+    FROM [Places]
+    WHERE [Measures].[frequency]
+
 ===== MDX Query =====
+
+SELECT NON EMPTY Except(
+   {[Place].[All Places].Children}, 
+   {[Place].[NONE]}
+) ON COLUMNS,
+  {[Sentence].[All Sentences].[Ben?t, Stephen Vincent].Children} ON ROWS
+FROM [Places]
+WHERE [Measures].[frequency]
+
 
 -- Selecting the top 10 places mentioned -- 
 WITH SET TopPlaces AS 
-'TopCount( Except({[Place].[All Places].Children}, {[Place].[NONE]}), 10, [Measures].[frequency] )'
+'TopCount(  Except(
+                     {[Place].[All Places].Children},
+                     {[Place].[NONE]}
+                  ), 
+                  10, 
+                  [Measures].[frequency])'
 
 SELECT NON EMPTY Hierarchize(
    {[Sentence].[All Sentences]}) ON COLUMNS, 
 TopPlaces ON ROWS
-from [Places]
-where [Measures].[frequency]
+FROM [Places]
+WHERE [Measures].[frequency]
+
+
 
 
 Selecting tuples
 
 SELECT 
-([Place].[Houston]) ON ROWS,
+([Place].[America], [Sentence].[All Sentences].[Curwood, James Oliver].[The Black Hunter.].[0-19].[17]) ON ROWS,
 ([Measures].[frequency]) ON COLUMNS 
 FROM [Places]
+
 
 Select only two places
 
@@ -47,15 +72,30 @@ FROM [Places]
 
 Mentioning places found in certain sentences of a book
 
-SELECT NON EMPTY Hierarchize(
-   {[Sentence].[Euripides].[Rhesus [The Rhesus of Euripides]]].[2], 
-   [Sentence].[Euripides].[Rhesus [The Rhesus of Euripides]]].[4], 
-   [Sentence].[Euripides].[Rhesus [The Rhesus of Euripides]]].[5], 
-   [Sentence].[Euripides].[Rhesus [The Rhesus of Euripides]]].[7], 
-   [Sentence].[Euripides].[Rhesus [The Rhesus of Euripides]]].[9], 
-   [Sentence].[Euripides].[Rhesus [The Rhesus of Euripides]]].[11]}) ON COLUMNS, 
-NON EMPTY Except({[Place].[All Places].Children.Parent}, {[Place].[NULL]}) ON ROWS
+SELECT NON EMPTY Hierarchize
+(
+   {
+      [Sentence].[Moodie, Susanna].[Roughing it in the Bush; or, Forest Life in Canada].[0-19].[0], 
+      [Sentence].[Moodie, Susanna].[Roughing it in the Bush; or, Forest Life in Canada].[0-19].[1], 
+      [Sentence].[Moodie, Susanna].[Roughing it in the Bush; or, Forest Life in Canada].[0-19].[2], 
+      [Sentence].[Moodie, Susanna].[Roughing it in the Bush; or, Forest Life in Canada].[0-19].[3], 
+      [Sentence].[Moodie, Susanna].[Roughing it in the Bush; or, Forest Life in Canada].[0-19].[4], 
+      [Sentence].[Moodie, Susanna].[Roughing it in the Bush; or, Forest Life in Canada].[0-19].[5], 
+      [Sentence].[Moodie, Susanna].[Roughing it in the Bush; or, Forest Life in Canada].[0-19].[6], 
+      [Sentence].[Moodie, Susanna].[Roughing it in the Bush; or, Forest Life in Canada].[0-19].[7], 
+      [Sentence].[Moodie, Susanna].[Roughing it in the Bush; or, Forest Life in Canada].[0-19].[8], 
+      [Sentence].[Moodie, Susanna].[Roughing it in the Bush; or, Forest Life in Canada].[0-19].[9]
+   }
+) ON COLUMNS, 
+NON EMPTY Except({[Place].[All Places].Children}, {[Place].[NONE]}) ON ROWS
 from [Places]
+
+Slice of Canada:
+
+select { [Measures].[Frequency]} ON COLUMNS,
+  {[Sentence].[All Sentences].Children} ON ROWS
+from [Places]
+where [Place].[Canada]
 
 
 Omitting a member:
