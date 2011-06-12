@@ -1,10 +1,11 @@
-    SELECT NON EMPTY Except(
-       {[Location].[All Places].Children}, 
-       {[Location].[China]}
-    ) ON COLUMNS,
-      {[Product].[All Products].[Bottled Water].Children} ON ROWS
-    FROM [Places]
-    WHERE [Measures].[frequency]
+WITH SET ValidPlaces AS 
+'Except({[Place].[All Places].Children}, {[Place].[NONE]})'
+ MEMBER [Place].[AllValidPlaces] as Sum( ValidPlaces , [Measures].[frequency] )
+
+select Hierarchize([Place].[AllValidPlaces]) ON COLUMNS,
+  {[Sentence].[All Sentences]} ON ROWS
+from [Places]
+where [Measures].[frequency]
 
 ===== MDX Query =====
 
