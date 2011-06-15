@@ -12,18 +12,18 @@ not the IT professionals to perform the data analysis~\cite{KaserKeithLemire2006
 Data warehouses are often used as one of the main components of Decision Support Systems~\cite{chau:db-tech-dss}. These systems allow a business to make better
 decisions by allowing efficient analyses on historical data accumulated over time. Decision support systems often involve creating OLAP cubes which allow the
 efficient analysis of the data acquired from the data warehouse~\cite{pede:md-db-tech}. However, OLAP cubes and data warehouses are also used in other fields
-that generate large amounts of records. The project presented in this report is geared towards applying data warehousing in the field of literary texts. It is
-inspired from the LitOLAP~\cite{KaserKeithLemire2006} project and other related work that combine Natural Language Processing (NLP) and data warehousing
+that generate a great number of records. The project presented in this report is geared towards applying data warehousing in the field of literary texts. It is
+inspired from the LitOLAP project~\cite{KaserKeithLemire2006} and other related work that combine Natural Language Processing (NLP) and data warehousing
 techniques~\cite{inok:OLAP-text-cikm07,text-mining-survey-sigmod07, pere:integratingDW}. The LitOLAP project seeks to apply data warehousing techniques to
 literary text processing. It gathers from text the data required to build OLAP cubes that facilitate the analysis of specific aspects of texts that can be
 measured. For instance, a cube could be built on the frequencies of co-occurring words, word n-grams or analogies. The OLAP cube generated may help a literary
-researcher to draw conclusions about an author’s style, or particularities about a book.
+researcher draw conclusions about an author’s style, or particularities about a book.
 
 My project involves building a data warehouse of places mentioned in books gathered from the Gutenberg Canada website (\url{http://gutenberg.ca/}) and building
 a corresponding OLAP cube to facilitate analysis of the data warehouse. For the ETL process, I used: GATE (\url{http://gate.ac.uk/}) to perform Natural
 Language Processing (NLP), Nokogiri an XML parser for ruby (\url{http://nokogiri.org/}), and Pentaho’s ETL tool, Kettle (\url{http://pentaho.com/}). As my
-RDBMS, I used MySQL. Finally for my reporting tool and the construction of OLAP cubes I used JasperServer 4.0 (\url{http://jasperforge.org/}) which provides an
-installation of Mondrian and JPivot.
+RDBMS, I used MySQL. Finally, for my reporting tool and the construction of OLAP cubes I used JasperServer 4.0 (\url{http://jasperforge.org/}) which provides
+an installation of Mondrian and JPivot.
 
 % section introduction (end)
 
@@ -172,8 +172,8 @@ and place tags. The annotated text is saved as an XML file which is then fed to 
 during the extraction stage, and the annotations in the XML file. 
 
 Once the de-normalized table is built it is loaded on Pentaho's ETL tool (a.k.a. Kettle) which takes the information and creates and populates the fact and
-dimension tables for the schema and completing the transformation and loading stages of the ETL Process. The entire transformation process to gather the
-sentences and places from the books is summarized in Figure~\ref{fig:figures_BookETLProcess}.
+dimension tables for the schema; thus completing the transformation and loading stages of the ETL Process. The entire transformation process to gather the
+sentences and places from the books is illustrated in Figure~\ref{fig:figures_BookETLProcess}.
 
 \begin{figure}[htbp]
     \centering
