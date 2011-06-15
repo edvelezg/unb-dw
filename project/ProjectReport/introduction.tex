@@ -35,7 +35,7 @@ query performance. The multidimensional model divides the data between measureme
 processes and are usually numeric. The context is represented by the dimensions which help answer the questions of who, what, when, where, why, and how of a
 measurement. Dimensional models may be stored as star schemas or cubes. When stored in a relational database platform, they are called star schemas, and when
 stored in an OLAP structure they are called cubes. To illustrate with an example, consider the multidimensional model for a store that sells fish (see
-Figure~\ref{fig:figures_FishMDModel}).
+Figure~\ref{fig:figures_FishMDModel}). Each cell in this model of three dimensions contains a measure. The measure is referenced by specifying a value in each of the three dimensions.
 
 \begin{figure}[htbp]
     \centering
@@ -44,7 +44,6 @@ Figure~\ref{fig:figures_FishMDModel}).
     \label{fig:figures_FishMDModel}
 \end{figure}
 
-Each cell in this model of three dimensions contains a measure. The measure is referenced by specifying a value in each of the three dimensions.
 Multidimensional models are often considered more appropriate for OLAP applications than traditional normalized relational models. Because industry also refers
 to them as entity-relationship (ER) models, I will refer to them as such. In contrast to multidimensional models, ER models seek to reduce redundancies as much
 as possible, and are considered better for transactional processing or Online Transactional Processing (OLTP) applications. The key difference between them is
