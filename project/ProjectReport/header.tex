@@ -1,0 +1,91 @@
+% header (fold)
+%  Column Merging
+%
+%  Created by Ed on 2010-06-15.
+%  Copyright (c) 2010 DoTA. All rights reserved.
+%
+\documentclass[12pt]{unbthesis}
+\usepackage[numbers,sort&compress]{natbib}  
+
+\pdfoutput=1
+
+% force pdf output4
+% Use utf-8 encoding for foreign characters
+% \usepackage[utf8]{inputenc} 
+\usepackage{hyperref}
+
+% Setup for fullpage use
+%\usepackage{fullpage}
+\usepackage{listings}
+% \usepackage{beramono}
+\usepackage{courier}
+\usepackage{color}
+\usepackage{xcolor}
+
+\usepackage{caption}
+% \DeclareCaptionFont{white}{\color{white}}
+% \DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+% \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+
+\lstset{
+        lineskip           = 0.7pt,
+        language           = SQL,
+        basicstyle         = \ttfamily, % Standardschrift
+        numberstyle        = \tiny,          % Stil der Zeilennummern
+        numbersep          = 5pt,              % Abstand der Nummern zum Text
+        tabsize            = 2,                  % Groesse von Tabs
+        extendedchars      = true,         %
+        breaklines         = true,            % Zeilen werden Umgebrochen
+        % keywordstyle     = \color{red},
+        % stringstyle      = \color{white}\ttfamily, % Farbe der String
+        showspaces         = false,           % Leerzeichen anzeigen ?
+        showtabs           = false,             % Tabs anzeigen ?
+        xleftmargin        = 17pt,
+        framexleftmargin   = 17pt,
+        framexrightmargin  = 5pt,
+        framexbottommargin = 4pt,
+        % captionpos         = b, 
+        backgroundcolor   = \color{lightgray},
+        showstringspaces   = false      % Leerzeichen in Strings anzeigen ?
+}
+
+\usepackage{subfig} 
+\usepackage{pdfsync} 
+\usepackage{multirow}
+\usepackage{amsthm}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{verbatim}
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+
+\usepackage{lipsum}
+\renewcommand{\baselinestretch}{1.7}
+
+
+\usepackage{color} 
+\newcommand{\daniel}[1]{{\textbf{{\small{\color{magenta}DL}: #1{\color{magenta}$\circ$}}}}} 
+\newcommand{\owen}[1]{\textbf{{\small{\color{red}OK}: #1{\color{red}$\circ$}}}} 
+\newcommand{\ed}[1]{\textbf{{\small{\color{blue}ED}: #1{\color{blue}$\circ$}}}}
+\newcommand*{\vpointer}{\vcenter{\hbox{\scalebox{2}{\Huge\pointer}}}}
+
+\usepackage{boxedminipage}
+\usepackage{appendix}
+% Package for including code in the document
+\usepackage{listings}
+
+% This is now the recommended way for checking for PDFLaTeX:
+\usepackage{ifpdf}
+
+\ifpdf
+\usepackage[pdftex]{graphicx}
+\else
+\usepackage{graphicx}
+\fi
+\title{A Data Warehouse for Canadian Literature}
+\author{ Eduardo Gutarra }
+
+%\date{2010-06-15}
+% (end)
